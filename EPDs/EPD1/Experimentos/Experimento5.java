@@ -11,9 +11,14 @@ public class Experimento5 {
             c.add(i);
 
         it = c.iterator(); // Obtenemos un iterador para la colección
+        Integer j = 0;
         while (it.hasNext()) { // Mientras haya más elementos
             Integer i = (Integer) it.next();
-            Integer j = (Integer) it.next();
+            if (it.hasNext()) {
+                j = (Integer) it.next();
+            } else {
+                j = 0;
+            }
 
             System.out.println(i.intValue() + j.intValue()); // Imprimimos la suma
         }

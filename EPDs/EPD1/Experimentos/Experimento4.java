@@ -4,7 +4,7 @@ import java.util.*;
 public class Experimento4 {
     
     public static void main(String[] args) {
-        Collection c = new ArrayList();
+        Collection<Integer> c = new ArrayList<>();
         Iterator it; // Referencia al iterador
 
         for (int i = 1; i <= 5; i++) // Rellenamos la coleccion

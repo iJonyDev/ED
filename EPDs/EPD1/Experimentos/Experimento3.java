@@ -1,23 +1,25 @@
 package EPDs.EPD1.Experimentos;
-import java.util.*;
-import poo.io.IO;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Scanner;
 
 public class Experimento3 {
     public static void main(String args[]) {
-        Collection c = new ArrayList();
-        int[] v;
+        Collection<Integer> c = new ArrayList<>();
+        // int[] v;
+        Object[] v;
         int elementos;
-
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Introduzca el número de datos: ");
-        elementos = (int) IO.readLine();
-
+        elementos = scanner.nextInt();
         for (int i = 0; i < elementos; i++) {
             System.out.println("Elemento " + (i + 1) + ": ");
-            c.add((int) IO.readNumber());
+            c.add(scanner.nextInt());
         }
-
-        v = c.toArray(); //toArray devuele un array de objetos
-        for (int i = 0; i < v.length; i++)
+        v = c.toArray();
+        for (int i = 0; i < v.length; i++) {
             System.out.println("Elemento " + (i + 1) + ": " + v[i].toString());
+        }
     }
 }
