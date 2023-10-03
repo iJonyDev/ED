@@ -1,3 +1,5 @@
+package EPDs.EPD2;
+
 public class Numero implements Comparable<Object> {
     private int numero;
 
