@@ -14,24 +14,23 @@ colección. */
 import java.util.*;
 
 public class Experimento5 {
-
     public static void main(String[] args) {
         Collection c = new ArrayList();
-        Iterator it; // Referencia al iterador
+        Iterator<Integer> it; // d) Iterador de tipo "Integer", que aprovecha el "autoboxing"
 
         for (int i = 1; i <= 10; i++) // Rellenamos la coleccion
             c.add(i);
 
         it = c.iterator(); // Obtenemos un iterador para la colección
+    // c) Solucion Error 1: Verificamos si hay elementos que recorrer, casos contrario, la suma del par de elementos sera el último elemento + 0.
         Integer j = 0;
         while (it.hasNext()) { // Mientras haya más elementos
-            Integer i = (Integer) it.next();
+            Integer i = it.next();  // con Iterator<Integer> it; evitamos hacer casting aquí
             if (it.hasNext()) {
-                j = (Integer) it.next();
+                j = it.next();      // con Iterator<Integer> it; evitamos hacer casting aquí
             } else {
                 j = 0;
             }
-
             System.out.println(i.intValue() + j.intValue()); // Imprimimos la suma
         }
     }

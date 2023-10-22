@@ -1,5 +1,8 @@
 package EPDs.EPD2;
-
+/*
+  b) Analice el código del siguiente programa. Su objetivo es obtener la edad máxima y mínima de una colección de personas que se
+  crea en el mismo programa. Ejecútelo para ver el resultado.
+ */
 import java.util.*;
 
 public class Experimento5{
