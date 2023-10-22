@@ -21,7 +21,9 @@ public class Experimento3 {
         else
             System.out.println("No está el número 20 en la lista");
         // c) Mostramos el minimo y el maximo de la lista
-        System.out.println("Valor minimo de la lista: " + l.get(0));
-        System.out.println("Valor maximo de la lista: " + l.get(l.size()-1));
+        // System.out.println("Valor minimo de la lista: " + l.get(0));
+        // System.out.println("Valor maximo de la lista: " + l.get(l.size()-1));
+        System.out.println("Valor minimo de la lista: " + Collections.min(l));
+        System.out.println("Valor maximo de la lista: " + Collections.max(l));
     }
 }

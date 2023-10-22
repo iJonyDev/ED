@@ -19,7 +19,9 @@ public class Experimento4 {
                 System.out.print(", ");
         }
         System.out.println("\nDespués de ordenar:");
-        Collections.sort(l);
+        ComparadorNumero c = new ComparadorNumero();// Experimento 6 b)
+        Collections.sort(l, c);                     // Experimento 6 b)
+        // Collections.sort(l);                     // Esperimento 4
         it = l.iterator();
         while (it.hasNext()) {
             System.out.print((Numero) it.next());
