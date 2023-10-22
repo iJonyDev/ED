@@ -1,4 +1,13 @@
 package EPDs.EPD1.Experimentos;
+/*a) Analice el siguiente código y determine el objetivo del mismo. Ejecútelo para ver el resultado. */
+
+/*
+b) Varíe el límite del bucle for de tal forma que la colección tenga 10 elementos. ¿Qué ocurre en este caso? ¿Qué significa la
+excepción que se produce?
+c) Realice los cambios necesarios en el código anterior para que funcione correctamente independientemente de los elementos que
+contenga la colección.
+d) Modifique el código anterior para no tener que hacer los castings en el bucle while. 
+*/
 import java.util.*;
 
 public class Experimento6 {

@@ -1,4 +1,5 @@
 package EPDs.EPD1.Experimentos;
+/*Observe cómo accede a los elementos de una colección en forma de vector. Solucione el error existente en el código. */
 
 import java.util.ArrayList;
 import java.util.Collection;

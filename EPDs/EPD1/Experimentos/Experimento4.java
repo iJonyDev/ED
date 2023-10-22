@@ -1,4 +1,6 @@
 package EPDs.EPD1.Experimentos;
+/*Observe cómo se obtiene un iterador para una colección y cómo se recorren los elementos de ésta
+haciendo uso de él. */
 import java.util.*;
 
 public class Experimento4 {
