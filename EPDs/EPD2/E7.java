@@ -5,8 +5,8 @@ package EPDs.EPD2;
  */
 import java.util.*;
 
-public class Experimento7 {
-    public static void main(String[] args) {
+public class E7 {
+        public static void main(String[] args) {
         List l = new ArrayList();
         Iterator it;
         for (int i = 0; i < 10; i++)
@@ -19,7 +19,7 @@ public class Experimento7 {
                 System.out.print(", ");
         }
         System.out.println("\nDespués de ordenar:");
-        Collections.sort(l, new ComparadorNum());// La solucion es modificar el comparador para resorver el problema del casting. Se ha creado una Clase ComparadorNum para solucionar el problema.
+        Collections.sort(l, new ComparadorNumero()); // El ComparadorNumero() no puede hacer el casting de Interger al tipo de la Clase Numero.
         it = l.iterator();
         while (it.hasNext()) {
             System.out.print((Integer) it.next());

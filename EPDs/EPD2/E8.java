@@ -5,19 +5,16 @@ package EPDs.EPD2;
  */
 import java.util.*;
 
-public class Experimento8 {
+public class E8 {
     public static void main(String[] args) {
-        List l = new LinkedList<>();
-        ListIterator<Character> it;     // Sol. Error 1
-        for (int i = 0; i < 5; i++) {   // Añadimos letras
+        List l = new LinkedList();
+        ListIterator it;                    // Error 1
+        for (int i = 0; i < 5; i++) {       // Añadimos letras
             l.add(new Character((char) ('a' + i)));
         }
         System.out.println(l);
-        it = l.listIterator(l.size());  // Sol. Error 2
+        it = l.listIterator(l.size() - 1);  // Error 2
         while (it.hasPrevious())
             System.out.println(it.previous().charValue());
-        
-        while (it.hasNext())
-            System.out.println(it.next().charValue());
     }
 }
