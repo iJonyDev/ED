@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /*
   a) La respuesta está en la clase Numero.java
   b) Ejecute el siguiente programa y compruebe el funcionamiento del método sort y de la aplicación del orden natural definido para la clase.

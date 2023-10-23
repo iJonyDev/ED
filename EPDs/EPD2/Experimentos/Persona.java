@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 
 public class Persona implements IPersona, Comparable<IPersona> {
     private int edad;

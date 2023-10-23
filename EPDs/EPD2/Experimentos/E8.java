@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /*
    a) El siguiente código tiene como objetivo recorrer una lista hacia atrás. Corrija el código, ejecútelo y observe la salida.
    b) ¿Por qué no funciona como se esperaba? Solucione el problema

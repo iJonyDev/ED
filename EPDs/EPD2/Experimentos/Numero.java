@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /*
  *a) El siguiente código corresponde a una clase diseñada para que sus objetos alberguen un número entero del 1 al 100 de
 origen aleatorio. Observe como su constructor sin argumentos inicializa automáticamente el atributo a un número aleatorio. La clase

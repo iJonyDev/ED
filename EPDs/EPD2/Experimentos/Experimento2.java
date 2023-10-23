@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /*
 a) Estudie el código del siguiente programa. Su objetivo es copiar los elementos de una lista en otra. Ejecútelo para ver el
 resultado.
@@ -6,7 +6,7 @@ b) ¿Por qué no funciona el programa? Proporcione una solución para que el pro
  */
 import java.util.*;
 
-public class E2 {
+public class Experimento2 {
     public static void main(String[] args) {
         List<Integer> l, m;
         l = new ArrayList<>();
@@ -14,7 +14,7 @@ public class E2 {
         for (int i = 0; i < 5; i++)
             l.add(i);
         System.out.println("l: " + l);
-        Collections.copy(m, l);             // Error: Este metodo no funciona asi
+        m.addAll(l);            // Copia con el método addAll()
         System.out.println("m: " + m);
     }
 }

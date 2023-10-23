@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /*
    a) El siguiente código tiene como objetivo recorrer una lista hacia atrás. Corrija el código, ejecútelo y observe la salida.
    b) ¿Por qué no funciona como se esperaba? Solucione el problema
@@ -16,7 +16,8 @@ public class Experimento8 {
         it = l.listIterator(l.size());  // Sol. Error 2
         while (it.hasPrevious())
             System.out.println(it.previous().charValue());
-        
+    // Para volver a imprimir la lista hacia atras hay que reiniciar el iterador
+        // it = l.listIterator(l);
         while (it.hasNext())
             System.out.println(it.next().charValue());
     }

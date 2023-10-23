@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /*
   El siguiente programa proviene de sustituir la clase Numero por la clase Integer en el experimento 4 y la aplicación del orden
   definido anteriormente. Ejecute dicho programa ¿Cuál es la razón de la excepción?

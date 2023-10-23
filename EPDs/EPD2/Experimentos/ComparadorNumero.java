@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /* Esperimento 6
   a) Si deseamos ordenar los objetos de la clase Numero con respecto a otro orden distinto al natural deberemos definir un comparador. Examine el código del siguiente comparador para la clase Numero y determine que orden impone a los objetos.
   b) Modifique el código del programa principal del experimento anterior para que se aplique en la ordenación el criterio de orden establecido por el anterior comparador.

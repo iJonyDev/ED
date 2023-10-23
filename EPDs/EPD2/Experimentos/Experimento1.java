@@ -1,4 +1,4 @@
-package EPDs.EPD2;
+package EPDs.EPD2.Experimentos;
 /*
  a) Analice el siguiente código y prediga antes de ejecutarlo la salida por pantalla de cada una de sus secciones.
  b) Ejecute el código y corrobore su respuesta al apartado anterior.
