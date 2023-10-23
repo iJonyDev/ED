@@ -17,10 +17,10 @@ public class Experimento1 {
         }
         it = l.iterator();
         while (it.hasNext())                
-            System.out.println(it.next());  // Se muestra segun el óden en el que han sido aniadidos por ser una lista.
+            System.out.println(it.next());  // Se muestra según el óden en el que han sido aniadidos.
         System.out.println("-------------------");
         it = s.iterator();
         while (it.hasNext())
-            System.out.println(it.next());  // Se muestra sin seguir un orden por tratarse de un conjunto.
+            System.out.println(it.next());  // Se muestran sin seguir un orden especifico.
     }
 }
