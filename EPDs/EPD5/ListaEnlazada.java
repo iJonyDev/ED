@@ -6,9 +6,9 @@ public class ListaEnlazada {
     private int size;
 
     
-    public void add(int index, Integer newElement) {
+    public void add(int index, Integer newElement) throws IndexOutOfBoundsException {
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+            throw new IndexOutOfBoundsException("Indice fuera de los limites");
         }
     
         if (index == 0) {
@@ -16,6 +16,7 @@ public class ListaEnlazada {
         } else if (index == size) {
             addEnd(newElement);
         } else {
+            if (newElement != null) {
             Node<Integer> currentNode = firstNode;
             for (int i = 0; i < index - 1; i++) {
                 currentNode = currentNode.getNext();
@@ -26,6 +27,7 @@ public class ListaEnlazada {
             currentNode.setNext(newNode);
     
             this.size++;
+            }
         }
     }
 
@@ -62,7 +64,7 @@ public class ListaEnlazada {
 
     public Integer getElement(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+            throw new IndexOutOfBoundsException("Indice fuera de los limites");
         }
     
         Node<Integer> currentNode = firstNode;
@@ -79,7 +81,7 @@ public class ListaEnlazada {
 
     public void remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+            throw new IndexOutOfBoundsException("Indice fuera de los limites");
         }
     
         if (index == 0) {
@@ -144,6 +146,7 @@ public class ListaEnlazada {
         return this.size;
     }
 
+    @Override
     public String toString() {
         String mostarLista = "";
         Node<Integer> currentNode = firstNode;
@@ -183,8 +186,16 @@ public class ListaEnlazada {
         list.remove(2);
         System.out.println(list.toString());
         System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
-        System.out.println("El primer elemento es " + list.getFront());
-        System.out.println("El último elemento es " + list.getBack());
+
+        list.add(3, 6);
+        list.add(3, null);
+        list.add(0, null);
+        System.out.println(list.toString());
+        System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
+        list.add(7, 6);
+        System.out.println(list.toString());
+        System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
+
         if(list.isEmpty()){
             System.out.println("La lista está vacia");
         }
