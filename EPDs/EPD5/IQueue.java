@@ -1,6 +1,7 @@
 package EPDs.EPD5;
 
 public interface IQueue<E> {
+
     boolean buscar(E o);
 
     E dequeue() throws EmptyQueueException;
@@ -12,4 +13,5 @@ public interface IQueue<E> {
     boolean isEmpty();
 
     int size();
+
 }
