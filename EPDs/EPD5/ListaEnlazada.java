@@ -63,7 +63,7 @@ public class ListaEnlazada {
     }
 
     public Integer getElement(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException("Indice fuera de los limites");
         }
     
@@ -76,7 +76,11 @@ public class ListaEnlazada {
     }
 
     public boolean isEmpty(){
-        return size == 0;
+        if ( size == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public void remove(int index) throws IndexOutOfBoundsException {
@@ -192,12 +196,19 @@ public class ListaEnlazada {
         list.add(0, null);
         System.out.println(list.toString());
         System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
-        list.add(7, 6);
+
+        list.add(6, 6);
         System.out.println(list.toString());
         System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
 
+        list.add(7, 7);
+        System.out.println(list.toString());
+        System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
+        System.out.println(list.getElement(0));
         if(list.isEmpty()){
             System.out.println("La lista está vacia");
+        }else{
+            System.out.println("La lista no esta vacia");
         }
     }
     
