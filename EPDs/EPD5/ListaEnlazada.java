@@ -1,11 +1,11 @@
 package EPDs.EPD5;
 
-public class ListaEnlazada {
-    private Node<Integer> firstNode;
-    private Node<Integer> lastNode;
+public class ListaEnlazada<T> {
+    private Node<T> firstNode;
+    private Node<T> lastNode;
     private int size;
 
-    public void add(int index, Integer newElement) throws IndexOutOfBoundsException {
+    public void add(int index, T newElement) throws IndexOutOfBoundsException {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Indice fuera de los limites");
         }
@@ -16,11 +16,11 @@ public class ListaEnlazada {
             addEnd(newElement);
         } else {
             if (newElement != null) {
-                Node<Integer> currentNode = firstNode;
+                Node<T> currentNode = firstNode;
                 for (int i = 0; i < index - 1; i++) {
                     currentNode = currentNode.getNext();
                 }
-                Node<Integer> newNode = new Node<Integer>(newElement);
+                Node<T> newNode = new Node<T>(newElement);
                 newNode.setNext(currentNode.getNext());
                 currentNode.setNext(newNode);
                 this.size++;
@@ -28,9 +28,9 @@ public class ListaEnlazada {
         }
     }
 
-    public void addEnd(Integer newElement) {
+    public void addEnd(T newElement) {
         if (newElement != null) {
-            Node<Integer> newNode = new Node<Integer>(newElement);
+            Node<T> newNode = new Node<T>(newElement);
             if (firstNode != null) {
                 lastNode.setNext(newNode);
                 lastNode = newNode;
@@ -42,9 +42,9 @@ public class ListaEnlazada {
         }
     }
 
-    public void addFront(Integer newElement) {
+    public void addFront(T newElement) {
         if (newElement != null) {
-            Node<Integer> newNode = new Node<Integer>(newElement);
+            Node<T> newNode = new Node<T>(newElement);
             if (firstNode != null) {
                 newNode.setNext(firstNode);
                 firstNode = newNode;
@@ -56,12 +56,12 @@ public class ListaEnlazada {
         }
     }
 
-    public Integer getElement(int index) throws IndexOutOfBoundsException {
+    public T getElement(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException("Indice fuera de los limites");
         }
 
-        Node<Integer> currentNode = firstNode;
+        Node<T> currentNode = firstNode;
         for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
         }
@@ -83,12 +83,12 @@ public class ListaEnlazada {
         } else if (index == size - 1) {
             removeEnd();
         } else {
-            Node<Integer> currentNode = firstNode;
+            Node<T> currentNode = firstNode;
             for (int i = 0; i < index - 1; i++) {
                 currentNode = currentNode.getNext();
             }
 
-            Node<Integer> nextNode = currentNode.getNext();
+            Node<T> nextNode = currentNode.getNext();
             currentNode.setNext(nextNode.getNext());
             nextNode.setNext(null);
 
@@ -102,7 +102,7 @@ public class ListaEnlazada {
                 firstNode = null;
                 lastNode = null;
             } else {
-                Node<Integer> currentNode = firstNode;
+                Node<T> currentNode = firstNode;
                 while (currentNode.getNext() != lastNode) {
                     currentNode = currentNode.getNext();
                 }
@@ -119,7 +119,7 @@ public class ListaEnlazada {
                 firstNode = null;
                 lastNode = null;
             } else {
-                Node<Integer> oldTop = firstNode;
+                Node<T> oldTop = firstNode;
                 firstNode = firstNode.getNext();
                 oldTop.setNext(null);
             }
@@ -127,7 +127,7 @@ public class ListaEnlazada {
         }
     }
 
-    public Integer getFront() {
+    public T getFront() {
         if (firstNode != null) {
             return firstNode.getElemento();
         } else {
@@ -135,7 +135,7 @@ public class ListaEnlazada {
         }
     }
 
-    public Integer getBack() {
+    public T getBack() {
         if (lastNode != null) {
             return lastNode.getElemento();
         } else {
@@ -150,7 +150,7 @@ public class ListaEnlazada {
     @Override
     public String toString() {
         String lista = "";
-        Node<Integer> currentNode = firstNode;
+        Node<T> currentNode = firstNode;
         while (currentNode != null) {
             lista += currentNode.getElemento();
             lista += " ";
@@ -160,7 +160,7 @@ public class ListaEnlazada {
     }
 
     public static void main(String[] args) {
-        ListaEnlazada list = new ListaEnlazada();
+        ListaEnlazada<Integer> list = new ListaEnlazada<>();
         int i = 0;
         while(list.size < 10){
             list.addEnd(i);

@@ -1,0 +1,44 @@
+Sí, es posible implementar un iterador sin utilizar Java Collections Framework (JCF). Aquí tienes un ejemplo de cómo podrías implementar un iterador personalizado para tu clase  `ListaEnlazada` :
+public class ListaEnlazada<T> {
+    // Resto del código de la clase ListaEnlazada
+    
+    public MiIterador<T> getIterador() {
+        return new MiIterador<>();
+    }
+    
+    public class MiIterador<E> {
+        private Node<E> currentNode;
+        
+        public MiIterador() {
+            currentNode = (Node<E>) firstNode;
+        }
+        
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+        
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            E element = currentNode.getElement();
+            currentNode = currentNode.getNext();
+            return element;
+        }
+    }
+}
+En este ejemplo, la clase  `ListaEnlazada`  tiene un método  `getIterador()`  que devuelve una instancia de  `MiIterador` . La clase  `MiIterador`  es una clase interna dentro de  `ListaEnlazada`  y se encarga de recorrer los elementos de la lista.
+
+Puedes utilizar este iterador personalizado de la siguiente manera:
+ListaEnlazada<String> lista = new ListaEnlazada<>();
+lista.addEnd("Hola");
+lista.addEnd("Mundo");
+
+ListaEnlazada<String>.MiIterador<String> iterador = lista.getIterador();
+while (iterador.hasNext()) {
+    String elemento = iterador.next();
+    System.out.println(elemento);
+}
+En este ejemplo, utilizamos el iterador personalizado para recorrer los elementos de la lista y los imprimimos en la consola.
+
+Recuerda que esta implementación es solo un ejemplo básico y puedes personalizarla según tus necesidades.
