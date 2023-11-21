@@ -2,39 +2,42 @@ package EPDs.EPD5;
 
 public class Pila implements IPila {
     private Node<Integer> firstNode;
-    private Node<Integer> lastNode;
     private int size;
 
     @Override
     public boolean isEmpty() {
-        if (size == 0){
-            return true;
-        }else
-        return false;
+        return size == 0;
     }
 
     @Override
     public Object pop() throws PilaVaciaException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pop'");
+        if (isEmpty()) {
+            throw new PilaVaciaException("La pila está vacía");
+        }
+        Integer element = firstNode.getElemento();
+        firstNode = firstNode.getNext();
+        size--;
+        return element;
     }
 
     @Override
     public void push(Object o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'push'");
+        Node<Integer> newNode = new Node<>((Integer) o);
+        newNode.setNext(firstNode);
+        firstNode = newNode;
+        size++;
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return size;
     }
 
     @Override
     public Object top() throws PilaVaciaException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'top'");
+        if (isEmpty()) {
+            throw new PilaVaciaException("La pila está vacía");
+        }
+        return firstNode.getElemento();
     }
-    
 }

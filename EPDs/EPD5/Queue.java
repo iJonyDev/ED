@@ -7,8 +7,14 @@ public class Queue implements IQueue<Integer> {
 
     @Override
     public boolean buscar(Integer o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscar'");
+        Node<Integer> currentNode = firstNode;
+        while (currentNode != null) {
+            if (currentNode.getElemento().equals(o)) {
+                return true;
+            }
+            currentNode = currentNode.getNext();
+        }
+        return false;
     }
 
     @Override
@@ -39,21 +45,17 @@ public class Queue implements IQueue<Integer> {
 
     @Override
     public Integer front() throws EmptyQueueException {
-        if(firstNode == null){
-            throw new UnsupportedOperationException("La cola esta vacia");
-        }else{
+        if (firstNode == null) {
+            throw new EmptyQueueException("La cola esta vacia");
+        } else {
             Integer elemento = firstNode.getElemento();
             return elemento;
-        }  
+        }
     }
 
     @Override
     public boolean isEmpty() {
-        if( size == 0){
-            return true;
-        }else{
-            return false;
-        }
+        return size == 0;
 
     }
 
@@ -61,5 +63,5 @@ public class Queue implements IQueue<Integer> {
     public int size() {
         return this.size;
     }
-    
+
 }
