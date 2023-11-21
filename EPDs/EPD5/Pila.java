@@ -1,15 +1,40 @@
 package EPDs.EPD5;
 
-public interface Pila<E> {
-    boolean isEmpty();
+public class Pila implements IPila {
+    private Node<Integer> firstNode;
+    private Node<Integer> lastNode;
+    private int size;
 
-    E pop() throws PilaVaciaException;
+    @Override
+    public boolean isEmpty() {
+        if (size == 0){
+            return true;
+        }else
+        return false;
+    }
 
-    void push(E o);
+    @Override
+    public Object pop() throws PilaVaciaException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'pop'");
+    }
 
-    int size();
+    @Override
+    public void push(Object o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'push'");
+    }
 
-    String toString();
+    @Override
+    public int size() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'size'");
+    }
 
-    E top() throws PilaVaciaException;
+    @Override
+    public Object top() throws PilaVaciaException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'top'");
+    }
+    
 }

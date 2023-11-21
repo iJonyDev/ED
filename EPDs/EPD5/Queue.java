@@ -38,12 +38,12 @@ public class Queue implements IQueue<Integer> {
     }
 
     @Override
-    public Object front() throws EmptyQueueException {
+    public Integer front() throws EmptyQueueException {
         if(firstNode == null){
             throw new UnsupportedOperationException("La cola esta vacia");
         }else{
-            Object objeto = firstNode.getElemento();
-            return objeto;
+            Integer elemento = firstNode.getElemento();
+            return elemento;
         }  
     }
 
