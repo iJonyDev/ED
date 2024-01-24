@@ -69,8 +69,24 @@ public class ListaEnlazada<T> {
         return currentNode.getElemento();
     }
 
+    public T getFront() {
+        return (firstNode != null) ? firstNode.getElemento() : null;
+    }
+
+    public T getBack() {
+        return (lastNode != null) ? lastNode.getElemento() : null;
+    }
+
+    public int getSize() {
+        return this.size;
+    }
+
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public String listStatus() {
+        return (isEmpty() == false) ? "La lista está vacia" : "La lista no esta vacia";
     }
 
     public void remove(int index) throws IndexOutOfBoundsException {
@@ -127,26 +143,6 @@ public class ListaEnlazada<T> {
         }
     }
 
-    public T getFront() {
-        if (firstNode != null) {
-            return firstNode.getElemento();
-        } else {
-            return null;
-        }
-    }
-
-    public T getBack() {
-        if (lastNode != null) {
-            return lastNode.getElemento();
-        } else {
-            return null;
-        }
-    }
-
-    public int getSize() {
-        return this.size;
-    }
-
     @Override
     public String toString() {
         String lista = "";
@@ -162,7 +158,7 @@ public class ListaEnlazada<T> {
     public static void main(String[] args) {
         ListaEnlazada<Integer> list = new ListaEnlazada<>();
         int i = 0;
-        while(list.size < 10){
+        while (list.size < 10) {
             list.addEnd(i);
             i++;
         }
@@ -191,11 +187,7 @@ public class ListaEnlazada<T> {
         System.out.println(list.toString());
         System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
 
-        if (list.isEmpty()) {
-            System.out.println("La lista está vacia");
-        } else {
-            System.out.println("La lista no esta vacia");
-        }
+        list.listStatus();
         System.out.println("El primer elemento es " + list.getFront());
         System.out.println("El último elemento es " + list.getBack());
 
@@ -204,11 +196,8 @@ public class ListaEnlazada<T> {
         }
         System.out.println(list.toString());
         System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
-        if (list.isEmpty()) {
-            System.out.println("La lista está vacia");
-        } else {
-            System.out.println("La lista no esta vacia");
-        }
+
+        list.listStatus();
         System.out.println("El primer elemento es " + list.getFront());
         System.out.println("El último elemento es " + list.getBack());
 

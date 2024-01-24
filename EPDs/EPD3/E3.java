@@ -1,4 +1,5 @@
 package EPDs.EPD3;
+
 /*
    a) El siguiente programa rellena una colección ordenada con palabras y posteriormente consulta el contenido de dicha colección. Analice el código y complete los huecos que faltan.
    b) ¿Por qué la palabra “lugar” aparece en el subconjunto “Palabras desde la palabra lugar” y no en el subconjunto “Palabras hasta
