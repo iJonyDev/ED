@@ -86,7 +86,7 @@ public class ListaEnlazada<T> {
     }
 
     public String listStatus() {
-        return (isEmpty() == false) ? "La lista está vacia" : "La lista no esta vacia";
+        return (isEmpty() == true) ? "La lista está vacia" : "La lista no esta vacia";
     }
 
     public void remove(int index) throws IndexOutOfBoundsException {
@@ -113,17 +113,17 @@ public class ListaEnlazada<T> {
     }
 
     public void removeEnd() {
-        if (lastNode != null) {
+        if (firstNode != null) {
             if (firstNode == lastNode) {
                 firstNode = null;
                 lastNode = null;
             } else {
-                Node<T> currentNode = firstNode;
-                while (currentNode.getNext() != lastNode) {
-                    currentNode = currentNode.getNext();
+                Node<T> nodoActual = firstNode;
+                while (nodoActual.getNext() != lastNode) {
+                    nodoActual = nodoActual.getNext();
                 }
-                currentNode.setNext(null);
-                lastNode = currentNode;
+                nodoActual.setNext(null);
+                lastNode = nodoActual;
             }
             this.size--;
         }
@@ -135,9 +135,9 @@ public class ListaEnlazada<T> {
                 firstNode = null;
                 lastNode = null;
             } else {
-                Node<T> oldTop = firstNode;
+                Node<T> oldFirstNode = firstNode;
                 firstNode = firstNode.getNext();
-                oldTop.setNext(null);
+                oldFirstNode.setNext(null);
             }
             this.size--;
         }
@@ -192,12 +192,12 @@ public class ListaEnlazada<T> {
         System.out.println("El último elemento es " + list.getBack());
 
         while (!list.isEmpty()) {
-            list.removeEnd();
+            list.removeFront();
+            System.out.println(list.toString());
+            System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
         }
-        System.out.println(list.toString());
-        System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
 
-        list.listStatus();
+        System.out.println(list.listStatus());
         System.out.println("El primer elemento es " + list.getFront());
         System.out.println("El último elemento es " + list.getBack());
 

@@ -14,6 +14,7 @@ public class ListaEnlazada<T> {
             } else {
                 firstNode = nuevoNodo;
                 lastNode = nuevoNodo;
+
             }
             this.size++;
         }
@@ -34,7 +35,9 @@ public class ListaEnlazada<T> {
     }
 
     public void add(int index, Persona persona) {
-        if (index >= 0 && index <= size) {
+        if (index < 0 || index > size) {
+            System.out.println("Indice no valido");
+        } else {
             if (index == 0) {
                 addFront(persona);
             } else if (index == size) {
@@ -42,21 +45,15 @@ public class ListaEnlazada<T> {
             } else {
                 if (persona != null) {
                     Node nuevoNodo = new Node(persona);
-                    if (firstNode != null) {
-                        Node nodoActual = firstNode;
-                        int i = 0;
-                        while (i < index) {
-                            nodoActual = nodoActual.getNext();
-                            i++;
-                        }
-                        nuevoNodo.setNext(nodoActual.getNext());
-                        nodoActual.setNext(nuevoNodo);
+                    Node nodoActual = firstNode;
+                    for (int i = 0; i < index; i++) {
+                        nodoActual = nodoActual.getNext();
                     }
+                    nuevoNodo.setNext(nodoActual.getNext());
+                    nodoActual.setNext(nuevoNodo);
                     this.size++;
                 }
             }
-        } else {
-            System.out.println("Indice no valido!");
         }
     }
 
@@ -69,18 +66,51 @@ public class ListaEnlazada<T> {
     }
 
     public Persona getElement(int index) {
-        if (index == 0) {
-            return getFront();
-        } else if (index > 0 && index < size - 1) {
-            Node nodoActual = firstNode;
-            int i = 0;
-            while (i <= index) {
-                nodoActual = nodoActual.getNext();
-                i++;
-            }
-            return nodoActual.getPersona();
+        if (index < 0 || index >= size) {
+            System.out.println("Indice no valido!");
+            return null;
         } else {
-            return getEnd();
+            if (firstNode != null) {
+                Node nodoActual = firstNode;
+                for (int i = 0; i < index; i++) {
+                    nodoActual = nodoActual.getNext();
+                }
+                return nodoActual.getPersona();
+            } else {
+                System.out.println("Lista vacia!");
+                return null;
+            }
+        }
+    }
+
+    public void removeFront() {
+        if (firstNode != null) {
+            if (firstNode == lastNode) {
+                firstNode = null;
+                lastNode = null;
+            } else {
+                Node nodoAux = firstNode;
+                firstNode = firstNode.getNext();
+                nodoAux.setNext(null);
+            }
+            this.size--;
+        }
+    }
+
+    public void removeEnd() {
+        if (firstNode != null) {
+            if (firstNode == lastNode) {
+                firstNode = null;
+                lastNode = null;
+            } else {
+                Node nodoActual = firstNode;
+                while (nodoActual.getNext() != lastNode) {
+                    nodoActual = nodoActual.getNext();
+                }
+                nodoActual.setNext(null);
+                lastNode = nodoActual;
+            }
+            this.size--;
         }
     }
 
@@ -96,8 +126,11 @@ public class ListaEnlazada<T> {
         list.addEnd(p2);
         System.out.println(list.getEnd().toString());
         list.add(1, p3);
-        System.out.println(list.getElement(1));
+        System.out.println(list.getElement(2));
         System.out.println(list.size);
+        for (int i = 0; i < list.size; i++) {
+            System.out.println(list.getElement(i).getNombre());
+        }
 
     }
 }
