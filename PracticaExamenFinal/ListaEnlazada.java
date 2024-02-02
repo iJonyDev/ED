@@ -114,6 +114,14 @@ public class ListaEnlazada<T> {
         }
     }
 
+    public void remove(int index) {
+
+    }
+
+    public boolean isEmpty() {
+        return (size == 0) ? true : false;
+    }
+
     public static void main(String[] args) {
         Persona p1 = new Persona("Jonathan", "Quishpe", "1111");
         Persona p2 = new Persona("Edwin", "Quishpe", "2222");
@@ -127,9 +135,10 @@ public class ListaEnlazada<T> {
         System.out.println(list.getEnd().toString());
         list.add(1, p3);
         System.out.println(list.getElement(2));
+
         System.out.println(list.size);
         for (int i = 0; i < list.size; i++) {
-            System.out.println(list.getElement(i).getNombre());
+            System.out.println(list.getElement(i));
         }
 
     }
