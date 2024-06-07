@@ -381,3 +381,259 @@ public interfaz ListIterator<E> extends Iterator<E>
     * **UnsupportedOperationException**, si la implementación de este interfaz no incorporó este método
     * **ClassCastException**, si el tipo de este objeto impidió su adición a una lista
     * **IllegalStateException**, si este objeto infringe alguna restricción que impida su adicción a la lista, o bien, next o previous no fueron llamados, o lo fueron pero después de la invocación a add o remove.
+
+## **4. Interfaces Comparable y Comparator**
+
+Estas infercaces están orientadas a mantener ordenadas las colecciones (**listas**,**sets** y **maps**) que deben mantener un orden. Para ello dispone delas interfaces **java.lang.Comparable** y **java.util.Comparator** (obsérvese que pertenecen a packages diferentes).
+
+### 4.1. Interfaz Comparable
+Se dice que las clases que implementan esta interfaz cuentan con un “orden natural”. Este orden es total es decir, que siempre han de poder ordenarse dos objetos cualesquiera de la clase que implementa esta interfaz. La interfaz Comparable declara el método compareTo() de la siguiente forma:
+
+```java
+    public int compareTo(T obj)
+```
+que compara su argumento implícito con el que se le pasa por parámetro. Este método devuelve un entero 
+<u> negativo , cero o positivo </u>
+según el argumento implícito (this) sea <u> anterior , igual o posterior </u> al objeto obj., respectivamente.
+
+**Si se redefine**, el método **compareTo()** <u> debe ser programado con cuidado </u>: es muy necesario que sea <u> coherente con el método </u> **equals()** y <u> que cumpla la propiedad transitiva </u> .(Si X<Y y Y<Z => X<Z) 
+
+Las **listas y las tablas** <u>cuyos elementos implementan **Comparable** </u> pueden ser **ordenadas con** los métodos **Collections.sort()** y **Arrays.sort()** <u>sin necesidad de un
+Comparator</u>
+
+- Si ObjArray es una matriz, puede ser ordenada mediante Arrays.sort(ObjArray).
+- Si ObjList es una Lista, puede ser ordenada mediante Collections.sort(ObjList), o se puede buscar un objeto obj mediante Collections.binarySearch(ObjList, obj).
+- Se puede usar como un elemento dentro de un TreeSet.
+
+
+**Ejemplo (Ordenación de una Lista usando Comparable)**. 
+
+La interfaz Empleado es implementada por la clase Persona, que a su vez implementa la interfaz Comparable (redefiniendo compareTo). Así, **compareTo()** <u> define la ordenación natural </u> de las personas, siendo ésta <u> por apellidos, nombre y edad </u>.
+
+```java
+// Empleado.java
+public interface Empleado {
+    public String getNombre();
+    public String getApellidos();
+    public int getEdad();
+    // No se añade compareTo, ya que está declarado en la interfaz Comparable
+}
+
+// Persona.java
+public class Persona implements Empleado, Comparable {
+    private String nombre, apellidos;
+    private int edad;
+
+    public Persona(String n, String a, int e) { 
+        nombre = n; 
+        apellidos = a; 
+        edad = e;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public boolean equals(Object o) {
+        if(!(o instanceof Persona)) {
+            return false;
+        } else {
+            Persona p = (Persona)o;
+            return p.nombre.equals(nombre) && p.apellidos.equals(apellidos) && p.edad == edad; //son enteros int
+        }
+    }
+
+    public String toString() {
+        return apellidos + ", " + nombre + " (" + edad +")" ;
+    }
+
+    public int compareTo(Object o) {
+        Persona p = (Persona)o; //Eleva ClassCastException si o no es una Persona
+        int cmp = apellidos.compareTo(p.apellidos); //Primero por apellidos
+        if (cmp == 0) {
+            cmp = nombre.compareTo(p.nombre); //Segundo por nombre
+            if (cmp == 0) {
+                cmp = edad - p.edad; // Finalmente por edad
+            }
+        }
+        return cmp;
+    }
+}
+
+//TestEmpleado.java
+import java.util.*;
+
+public class TestEmpleado {
+    public static void main(String args[]) {
+        List c = new ArrayList();
+        Empleado e1 = new Persona("Pepe", "Lopez Perez", 25);
+        Empleado e2 = new Persona("Lola", "Lopez Aguilar", 23);
+        Empleado e3 = new Persona("Pepe", "Lopez Perez", 21);
+        Empleado e4 = new Persona("Antonio", "lopez Perez", 25);
+        Empleado e5 = new Persona("Alicia", "Sanchez Olmo", 21);
+        c.add(e1); 
+        c.add(e2); 
+        c.add(e3); 
+        c.add(e4); 
+        c.add(e5);
+        //Compara dos Empleados
+        if(((Persona)e1).compareTo((e2)) > 0) { // MUY IMPORTANTE EL CASTING
+            System.out.println(e1 + " es mayor que " + e2);
+        } else {
+            System.out.println(e1 + " es menor o igual que " + e2);
+        }
+        //Imprime la lista original
+        System.out.println("Lista Original:");
+        System.out.println(c);
+        //Ordena e imprime la lista ordenada según la ordenación natural de Persona
+        System.out.println("Ordenación:");
+        Collections.sort(c); //Ordena
+        System.out.println(c);
+    }
+}
+```
+
+La salida de este programa es:
+```
+Lopez Perez, Pepe (25) es mayor que Lopez Aguilar, Lola (23)
+Lista Original:
+[Lopez Perez, Pepe (25), Lopez Aguilar, Lola (23), Lopez Perez, Pepe (21), lopez Perez,
+Antonio (25), Sanchez Olmo, Alicia (21)]
+Ordenación:
+[Lopez Aguilar, Lola (23), Lopez Perez, Pepe (21), Lopez Perez, Pepe (25), Sanchez Olmo,
+Alicia (21), lopez Perez, Antonio (25)]
+```
+
+*Nótese que tras la ordenación, la persona “lopez Perez, Antonio (25)” es la última al comenzar su apellido por minúscula.*
+
+**Si querremos utilizar genéricos**, entonces hay que modificar el código anterior de la siguiente forma:
+
+```java
+public interface IEmpleado extends Comparable<IEmpleado> {
+    String getApellidos();
+    int getEdad();
+    String getNombre();
+}
+
+public class Persona implements IEmpleado {
+    private String nombre, apellidos;
+    private int edad;
+
+    public Persona(String n, String a, int e) {
+        nombre = n;
+        apellidos = a;
+        edad = e;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public boolean equals(Object o) {
+        if (!(o instanceof Persona)) {
+            return false;
+        } else {
+            Persona p = (Persona) o;
+            return p.nombre.equals(nombre)
+                && p.apellidos.equals(apellidos)
+                && p.edad == edad; //son enteros int
+        }
+    }
+
+    public String toString() {
+        return apellidos + ", " + nombre + " (" + edad + ")";
+    }
+
+    public int compareTo(IEmpleado p) {
+        int cmp = apellidos.compareTo(p.getApellidos()); //Primero por apellidos
+        if (cmp == 0) {
+            cmp = nombre.compareTo(p.getNombre()); //Segundo por nombre
+            if (cmp == 0) {
+                cmp = edad - p.getEdad(); // Finalmente por edad
+            }
+        }
+        return cmp;
+    }
+}
+
+import java.util.*;
+
+public class TestEmpleado {
+    public static void main(String args[]) {
+        List<IEmpleado> c = new ArrayList<>();
+        IEmpleado e1 = new Persona("Pepe", "Lopez Perez", 25);
+        IEmpleado e2 = new Persona("Lola", "Lopez Aguilar", 23);
+        IEmpleado e3 = new Persona("Pepe", "Lopez Perez", 21);
+        IEmpleado e4 = new Persona("Antonio", "lopez Perez", 25);
+        IEmpleado e5 = new Persona("Alicia", "Sanchez Olmo", 21);
+        c.add(e1);
+        c.add(e2);
+        c.add(e3);
+        c.add(e4);
+        c.add(e5);
+        //Compara dos Empleados
+        if (e1.compareTo((e2)) > 0) { //AHORA NO HACE FALTA EL CASTING
+            System.out.println(e1 + " es mayor que " + e2);
+        } else {
+            System.out.println(e1 + " es menor o igual que " + e2);
+        }
+        //Imprime la lista original
+        System.out.println("Lista Original:");
+        System.out.println(c);
+        //Ordena e imprime la lista ordenada según la ordenación natural de Persona
+        System.out.println("Ordenación:");
+        Collections.sort(c); //Ordena
+        System.out.println(c);
+    }
+}
+```
+
+### 4.2. Interfaz Comparator
+**Si** una clase ya tiene un criterio de ordenación natural (interfaz Comparable) y **se desea tener un criterio de ordenación diferente**, por
+ejemplo descendente o dependiente de otros campos, es necesario crear una clase que implemente dicho criterio. Esta clase, que se
+denomina comparador, es independiente de la clase objeto de la ordenación y deberá <u>implementar la interfaz</u> **Comparator** del
+paquete **java.util**. <u>Un comparador es por tanto una clase que define un criterio de ordenación de otras clases</u>.
+
+La interfaz **Comparator** <u>declara el método</u> **compare()** en la forma:
+```java
+public int compare(T o1, T o2);
+```
+
+Así, la <u>clase comparadora deberá implementar</u> la interfaz **Comparator**, y por tanto el método **compare()**, de la siguiente forma **(si no
+utilizamos genéricos)**:
+
+```java
+public class MiComparador implements Comparator<TIPO>{
+    public int compare(TIPO o1, TIPO o2){
+        <implementación del criterio de comparación>
+    }
+}
+```
+
+El método **compare()** <u>devuelve un entero negativo, cero o positivo según</u> *su primer argumento* <u>sea anterior, igual o posterior</u> *al
+segundo* (**así asegura un orden ascendente**). 
+
+La implementación debe asegurar que:
+- **Signo** (compare(x,y) debe ser igual a - signo(compare(y,x)) para todas las x, y. 
+    * Implica que compare(x, y) lanzará una excepción solo si compare(y, x) la lanza.
+- La **relación es transitiva**: compare(x,y) > 0 && compare(y,z) > 0 
+    * Implican compare(x z) > 0.
+- **compare(x,y)==0** 
+    * Implica signo(compare(x,z)==sgn(compare(y,z)) para todo z. 
+    * Este método <u>*lanzará*</u> la excepción **ClassCastException** <u>si el tipo de los argumentos impide la comparación</u> por este Comparator.
