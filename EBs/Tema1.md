@@ -637,3 +637,222 @@ La implementación debe asegurar que:
 - **compare(x,y)==0** 
     * Implica signo(compare(x,z)==sgn(compare(y,z)) para todo z. 
     * Este método <u>*lanzará*</u> la excepción **ClassCastException** <u>si el tipo de los argumentos impide la comparación</u> por este Comparator.
+
+Es muy **importante** que **compare()** <u>sea compatible con el método **equals()**</u> de los objetos que hay que mantener ordenados. Su implementación debe cumplir unas condiciones similares a las de compareTo().
+
+Casos de uso:
+
+- *Como argumento a un constructor* **TreeSet o TreeMap** (con la idea de que las mantengan ordenadas de acuerdo con dicho
+comparador).
+- En los métodos de **ordenación** 
+    * Collections.sort(List, Comparator)
+    * Arrays.sort(Object[], Comparator)
+- En los métodos de **búsqueda** 
+    * Collections.binarySearch(List, Object, Comparator)
+    * Arrays.binarySearch(List, Object, Comparator)
+
+**Ejemplo (Ordenación de una lista usando Comparator)**.
+Se añaden dos comparadores para hacer diferentes ordenaciones, en concreto:
+
+- **ComparadorIgnoraMayMin**, cuyo método compare() compara dos Personas con el mismo criterio que compareTo() del ejemplo anterior, sólo que en este caso no se distinguen mayúsculas y minúsculas
+- **ComparadorEdad**, que usa la edad como criterio de comparación entre personas (si son de la misma edad, compara por apellidos y nombre).
+
+```java
+//ComparadorIgnoraMayMin
+import java.util.*;
+class ComparadorIgnoraMayMin implements Comparator {
+    public int compare(Object o1, Object o2) {
+        Persona p1 = (Persona)o1; //Eleva ClassCastException si o1 no es Persona
+        Persona p2 = (Persona)o2; //Eleva ClassCastException si o2 no es Persona
+        //Es igual que compareTo de Persona pero usando compareToIgnoreCase()
+        int cmp = p1.getApellidos().compareToIgnoreCase(p2.getApellidos());
+        if (cmp == 0){
+            cmp = p1.getNombre().compareToIgnoreCase(p2.getNombre());
+            if (cmp == 0){
+                cmp = p1.getEdad() - p2.getEdad();
+            }
+        }
+        return cmp;
+
+    }
+}
+```
+**O con genéricos**:
+
+```java
+import java.util.*;
+class ComparadorIgnoraMayMin implements Comparator<IEmpleado> {
+    public int compare(IEmpleado p1, IEmpleado p2) {
+        //Es igual que compareTo de Persona pero usando compareToIgnoreCase()
+        int cmp = p1.getApellidos().compareToIgnoreCase(p2.getApellidos());
+        if (cmp == 0){
+            cmp = p1.getNombre().compareToIgnoreCase(p2.getNombre());
+            if (cmp == 0){
+                cmp = p1.getEdad() - p2.getEdad();
+            }
+        }
+        return cmp;
+
+    }
+}
+
+// ComparadorEdad.java
+import java.util.*;
+class ComparadorEdad implements Comparator {
+    public int compare(Object o1, Object o2) {
+        Persona p1 = (Persona)o1; //Eleva ClassCastException si o1 no es Persona
+        Persona p2 = (Persona)o2; //Eleva ClassCastException si o2 no es Persona
+        int cmp = p1.getEdad() - p2.getEdad(); //Primero por edad
+        if (cmp == 0)
+        {
+            cmp = p1.getApellidos().compareTo(p2.getApellidos());//Luego por apellidos
+            if (cmp == 0)
+            {
+                cmp = p1.getNombre().compareTo(p2.getNombre()); //finalmente por nombre
+            }
+        }
+        return cmp;
+
+    }
+}
+// TestEmpleadoComparators.java
+
+import java.util.*;
+public class TestEmpleadoComparators{
+    public static void main(String args[]){
+    List c = new ArrayList();
+    Empleado e1 = new Persona("Pepe", "Lopez Perez", 25);
+    Empleado e2 = new Persona("Lola", "lopez Aguilar", 23);
+    Empleado e3 = new Persona("Pepe", "Lopez Perez", 21);
+    Empleado e4 = new Persona("Antonio", "Lopez Perez", 25);
+    Empleado e5 = new Persona("Alicia", "Sanchez Olmo", 21);
+    c.add(e1); c.add(e2); c.add(e3); c.add(e4); c.add(e5);
+    //Imprime Lista Original
+    System.out.println("Lista Original:");
+    System.out.println(c);
+
+    //Ordenación natural (Comparable de Persona)
+
+    System.out.println("Ordenación Natural (Comparable):");
+    Collections.sort(c);
+    System.out.println(c);
+    //Ordenación sin diferenciar entre Mayúsculas y Minúsculas (Comparator)
+    System.out.println("Ordenación Natural sin MayMin (Comparator):");
+    Collections.sort(c, new ComparadorIgnoraMayMin());
+    System.out.println(c);
+    //Ordenación por Edad (Comparator)
+    System.out.println("Ordenación por edad(Comparator):");
+    Collections.sort(c, new ComparadorEdad());
+    System.out.println(c);
+    }
+}
+```
+
+La salida de este programa es:
+```
+Lista Original:
+[Lopez Perez, Pepe (25), lopez Aguilar, Lola (23), Lopez Perez, Pepe (21), Lopez Perez,
+Antonio (25), Sanchez Olmo, Alicia (21)]
+Ordenación Natural (Comparable):
+[Lopez Perez, Antonio (25), Lopez Perez, Pepe (21), Lopez Perez, Pepe (25), Sanchez Olmo,
+Alicia (21), lopez Aguilar, Lola (23)]
+Ordenación Natural sin MayMin (Comparator):
+[lopez Aguilar, Lola (23), Lopez Perez, Antonio (25), Lopez Perez, Pepe (21), Lopez Perez,
+Pepe (25), Sanchez Olmo, Alicia (21)]
+Ordenación por edad(Comparator):
+[Lopez Perez, Pepe (21), Sanchez Olmo, Alicia (21), lopez Aguilar, Lola (23), Lopez Perez,
+Antonio (25), Lopez Perez, Pepe (25)]
+Process Exit...
+```
+
+### 4.3. ¿Cuándo usar Comparable y Comparator?
+
+- Usaremos **Comparable** <u>para definir el orden natural</u> de una clase C, entendiendo por orden natural aquel que se utilizará
+normalmente o simplemente por convenio. Así, diremos que los objetos de clase C son comparables.
+
+- Por otro lado, <u>implementaremos nuevas clases (C1 ... Cn) que extiendan el interfaz</u> **Comparator** por cada <u>ordenación</u> nueva que necesitemos <u>distinta a la natural</u> para la clase C. Así tendremos una “librería de comparadores” (C1 ... Cn) para la clase C.
+
+## **5. Utilidades para objetos contenedores**: Clase java.util.Collections
+
+La <u>clase Collections (no confundir con la interfaz Collection, en singular)</u> es una clase que <u>define un buen número de métodos static</u>
+con diversas finalidades. 
+
+Dado que son estáticos, la llamada a dichos métodos es: **Collections.metodo(argumentos)** 
+- Todos los métodos aquí expuestos retornan o toman <u>como argumentos una</u> **List**, **excepto max y min** que toman <u>como argumento una Collection)</u>
+
+### 5.1. Ordenación
+```java
+public static void sort(List);
+public static void sort(List, Comparator);
+```
+
+### 5.2. Inversión del Orden
+
+```java
+public static void reverse(List);
+public static Comparator reverseOrder();
+```
+
+El métodos **reverse(List)** <u>ordena la lista en el sentido inverso de la posición actual de sus elementos</u> (independiente del valor de los
+elementos).**No realiza una ordenación descendente**.
+
+El método **reverseOrder()** <u>devuelve un Comparator</u> que **introduce una ordenación inversa** a la <u>impuesta por el orden natural</u> de un
+contenedor de objetos que implementan el interfaz Comparable. 
+
+- El **Comparator** devuelto <u>implementa el método</u> **compare()** de forma
+que **devuelve el resultado de compareTo() cambiado de signo**. 
+
+Puede utilizarse donde se espere un Comparator, por ejemplo:
+```C++
+Arrays.sort(list, Collections.reverseOrder());
+````
+
+### 5.3 Búsqueda
+```java
+public static int binarySearch(List list, T key);
+public static int binarySearch(List list, T key, Comparator comparator);
+```
+
+- **Buscan** el objeto en la lista **y devuelven la posición** (int) de tal objeto (resultado 0 o positivo).
+- **Si no está** en la lista 
+    * **Devuelve** (-(**pos_mayor**)-1), donde **pos_mayor** es la <u>posición del primer elemento en la lista mayor que el buscado</u>
+    * **O el tamaño de la lista** <u>si el elemento buscado es el mayor de todos</u>.
+
+La **lista debe estar ordenada de forma ascendente**. Esto puede lograrse con un <u>orden natural</u> para el primer método, como por ejemplo **sort(List)**; **o** bien **usando** un **Comparator** para el segundo método: **sort(List,Comparator)**. Los resultados no son especificados si la lista esta desordenada. No se asegura cuál será el elemento devuelto si existen duplicados. 
+
+Lanzan la excepción **ClassCastException** <u>si algún elemento en la lista tiene un tipo que impide su comparación</u>.
+
+### 5.4. Copiar Lista
+```java
+public static void copy(List, List);
+```
+- **Copia** los <u>elementos del segundo argumento en el primero</u>. 
+    * Si el tamaño del destino es mayor que el de la fuente, los restantes elementos no se ven afectados. 
+- **IndexOutOfBoundsException** <u>si el tamaño del destino es menor que el de la fuente</u>
+- **UnsupportedOperationException** <u>si el iterator de la lista no soporta la operación set</u>.
+
+### 5.5. Rellenar una Lista
+```java
+public static void fill(List list, T object);
+```
+- **Remplaza** <u>todos los elementos de la lista por el objeto especificado</u>. 
+- No modifica el tamaño de la lista. 
+- Se ejecuta en un tiempo lineal.
+- **UnsupportedOperationException** <u>si el iterator de la lista no soporta la operación set</u>.
+
+### 5.6. Máximos y Mínimos
+```java
+public static Object max(Collection);
+public static Object max(Collection, Comparator);
+public static Object min(Collection);
+public static Object min(Collection, Comparator);
+```
+- **Devuelven** el objeto que en la colección especificada sea el **menor, o el mayor de todos**, de <u>acuerdo al orden natural</u> (establecido por Comparable) de tales objetos, o según el Comparator especificado.
+
+### 5.7. Constantes
+```java
+public static final java.util.List EMPTY_LIST;
+public static final java.util.Set EMPTY_SET;
+public static final java.util.Map EMPTY_MAP;
+```
+Existen tres constantes (campos estáticos finales) de tipo List y Set que son inicializados para contener un objeto vacío del tipo correspondiente. Sus nombres son **EMPTY_LIST**, **EMPTY_SET** y **EMPTY_MAP**. Sirven para representar contenedores vacíos.
