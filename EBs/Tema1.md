@@ -856,3 +856,274 @@ public static final java.util.Set EMPTY_SET;
 public static final java.util.Map EMPTY_MAP;
 ```
 Existen tres constantes (campos estáticos finales) de tipo List y Set que son inicializados para contener un objeto vacío del tipo correspondiente. Sus nombres son **EMPTY_LIST**, **EMPTY_SET** y **EMPTY_MAP**. Sirven para representar contenedores vacíos.
+
+**Ejemplo**:
+```java
+import java.util.*;
+public class TestCollections {
+public static void main(String args[]) {
+    List<IEmpleado> c = new ArrayList<>();
+    int pos;
+    IEmpleado e1 = new Persona("Pepe", "Lopez Perez", 25);
+    IEmpleado e2 = new Persona("Lola", "lopez Aguilar", 23);
+    IEmpleado e3 = new Persona("Pepe", "Lopez Perez", 21);
+    IEmpleado e4 = new Persona("Antonio", "Lopez Perez", 25);
+    IEmpleado e5 = new Persona("Alicia", "Sanchez Olmo", 21);
+    c.add(e1);
+    c.add(e2);
+    c.add(e3);
+    c.add(e4);
+    c.add(e5);
+    //Imprime Lista Original
+    System.out.println("Lista Original:");
+    System.out.println(c);
+    //Ordenación natural (Comparable de Persona) y Búsqueda
+    System.out.println("Ordenación Natural (Comparable) y Búsqueda:");
+    Collections.sort(c); //Ordenación natural usando Comparable
+    System.out.println(c);
+    pos = Collections.binarySearch(c, e4);
+    System.out.println("Búsqueda: La posición de <" + e4 + "> es " + pos);
+    //Ordenación por Edad (Comparator) y Búsqueda
+    System.out.println("Ordenación por edad y búsqueda:");
+    Collections.sort(c, new ComparadorEdad());//Ordenación usando
+    ComparadorEdad
+    System.out.println(c);
+    pos = Collections.binarySearch(c, e4, new ComparadorEdad());
+    System.out.println("Búsqueda: La posición de <" + e4 + "> es " + pos);
+    //Máximo y mínimo
+    IEmpleado eMax = Collections.max(c, new ComparadorEdad());
+    IEmpleado eMin =Collections.min(c, new ComparadorEdad());
+    System.out.println("Empleado más viejo: " + eMax);
+    System.out.println("Empleado más joven: " + eMin);
+    }
+}
+```
+
+## **6. Clase Arrays (ampliación)**
+Esta clase es **muy parecida a la case *Collections*** vista anteriormente, por lo que sus métodos los veremos con menor nivel de detalle. La invocación a tales métodos también es similar: **Arrays.metodo(argumentos)**
+
+### 6.1. Tratar Matriz como Lista
+```java
+public static <T> List<T> asList(T[]);
+```
+**Retorna una vista** (no una copia) <u>de la matriz pasada como argumento implícito</u>, que puede ser manipulada como si fuera una lista.
+- Como dicha lista es respaldada por una matriz **no pueden agregarse o eliminarse elementos** a ella. 
+- <u>Cualquier modificación estructural</u> (del número de elementos) provoca **UnsupportedOperationException** <u>debido a la no implementación de los métodos opcionales del interfaz List en la lista retornada</u>.
+-  El **resto de cambios** en la lista **son reflejados en la matriz y viceversa**.
+
+### 6.2. Métodos similares a los de Collections
+```java
+public static void sort(tipoPrimitivo[]);
+public static void sort(tipoPrimitivo[], Comparator);
+public static void sort(Object[]);
+public static void sort(Object[], Comparator);
+public static int binarySearch(tipoPrimitivo[], unPrimitivo);
+public static int binarySearch(Object[], Object);
+public static int binarySearch(Object[], Object, Comparator);
+public static void fill(tipoPrimitivo[], unPrimitivo);
+public static void void fill(tipoprimitivo[], int fromIndex,
+int toIndex, unPrimitivo);
+public static void void fill(Object[], Object);
+public static void void fill( Object[], int fromIndex, int toIndex, Object);
+```
+
+## **7. Clase java.lang.Math**
+
+La case **Math** del <u>paquete estándar</u> **java.lang** <u>contiene métodos estáticos para realizar operaciones matemáticas básicas</u> como
+exponencial, logaritmos, raiz cuadrada, funciones trigonométricas, etc. La invocación a tales métodos o constantes es similar a los de
+*Collections y Arrays*: **Math.metodo(\<argumentos>)**
+
+Los miembros más interesantes de esta clase son:
+```java 
+public final class java.lang.Math {
+    // Constantes
+    public static final double E;
+    public static final double PI;
+    // Funciones trigonométricas
+    double sin(double);
+    double cos(double);
+    double tan(double);
+    double asin(double);
+    double acos(double);
+    double atan(double);
+    double toRadians(double);
+    double toDegrees(double);
+    // Funciones básicas
+    double exp(double);
+    double log(double);
+    double log10(double);
+    double sqrt(double);
+    double ceil(double);
+    double floor(double);
+    double pow(double, double);
+    <int/long/float/double> abs(<int/long/float/double>);
+    <int/long/float/double> max(<int/long/float/double>, <int/long/float/double>);
+    <int/long/float/double> max(<int/long/float/double>, <int/long/float/double>);
+    < . . . >
+}
+```
+
+## **8. Genéricos**
+Desde el JSE 1.5 , todas las interfaces del JCF utilizan genéricos, resultando de esta forma parametrizadas con respecto a la clase a
+la cual pertenecen los objetos gestionados por la colección.
+Por ejemplo, la declaración de la interfaz Collection es la siguiente:
+```java
+public interface Collection<E> .....
+```
+
+La **\<E>** dice que la interfaz es **genérica** (y E indica una clase genérica, que será definida en fase de declaración de la colección).
+
+- <u>Cuando se declara una instancia de Collection se puede</u> (y es aconsejable hacerlo) <u>declarar el tipo de los objetos contenido en
+la colección</u> (por ejemplo, colecciones de cadenas, o números de teléfono, etc.).
+```java
+Collection<String> agendaTel;
+```
+
+Especificando el tipo damos la **posibilidad** al compilador **de verificar** (en tiempo de compilación) **que el tipo del objeto insertado** en la
+colección **sea correcto**, reduciendo de tal forma errores que podrían darse en tiempo de ejecución.
+
+Consideramos el siguiente código:
+```java
+ArrayList strLista = new ArrayList();
+ArrayList intLista = new ArrayList();
+```
+
+Podemos suponer por el nombre de los objetos ArrayList que el primero contendrá cadenas, mientras que el segundo almacenará enteros, (pero lo suponemos sólo por el nombre).
+
+Sin embargo, no es así, ya que **ambos objetos podrán trabajar con
+cualquier tipo de dato**, ya que ArrayList trabaja con Object y este tipo de dato permite cualquier tipo de datos no primitivo,
+como *Integer, String, Float o Double, etc...*
+
+Ahora consideramos el siguiente **código que utiliza genéricos**:
+
+```java
+ArrayList<String> strLista = new ArrayList<String>();
+ArrayList<Integer> intLista = new ArrayList<Integer>();
+```
+<u>Ahora hemos especificado que</u> **strLista trabajará con cadenas** de caracteres y **intLista con enteros**, <u>sólo con agregar
+entre corchetes el tipo de dato</u>. 
+- El compilador lanzará un error si intentamos asignar al objeto un dato que no cumpla con su norma.
+
+Podremos hacer:
+
+```java
+strLista.add("Cadena 1 para strLista");
+strLista.add("cadena 2 para strLista");
+```
+pero no:
+```java
+strLista.add(3);
+```
+
+**Mientras que el compilador hubiera aceptado la última línea de código** si se hubiese creado strLista y intLista con la primera versión, o sea sin genéricos.
+
+Las **ventajas principales** de usar genéricos son:
+- El **compilador** <u>no aceptará que se agregue ningún tipo de dato distinto al especificado</u> en la instanciación de la clase.
+- **No** es **necesario** añadir los **castings** que eran indispensables para recuperar los datos homogéneos de una colección
+Object.
+- Se mantiene un **mayor control sobre la colección**
+
+Lo **genéricos son particularmente útiles con los iteradores**, ya que de esta forma no tenemos que hacer ningún casting.
+
+**Por ejemplo**, suponiendo tener una interfaz **IPersona**, y una clase **Persona** que la implemente, podemos definir una lista de
+personas y recorrerla de la siguiente forma:
+
+```java
+IPersona p1 = new Persona("123456", "Roberto", 30);
+IPersona p2 = new Persona("111111", "Patricia", 23);
+IPersona p3 = new Persona("222222", "Jesus", 34);
+IPersona p4 = new Persona("333333", "Alicia", 29);
+List<IPersona> listaPersonas = new ArrayList<IPersona>();
+listaPersonas.add(p1);
+listaPersonas.add(p2);
+listaPersonas.add(p3);
+listaPersonas.add(p4);
+for (Iterator<IPersona> it = listaPersonas.iterator(); it.hasNext();) {
+IPersona persona = it.next();
+System.out.println(persona);
+}
+```
+
+De esta forma no tenemos que hacer **ningún casting**, y nos **aseguramos** que nuestra lista sólo podrá **contener objetos que
+pertenezcan a una clase** que **implementa la interfaz IPersona**.
+
+**También podemos utilizar los genéricos para definir tipos genéricos** en la definición de clases. 
+
+Por ejemplo, considere esta clase:
+```java
+public class Contenedor {
+    private Object elemento;
+
+    public Object get() { 
+        return elemento; 
+    }
+
+    public void set(Object elemento) { 
+        this.elemento = elemento; 
+    }
+}
+```
+Los métodos de esta clase <u>aceptan o devuelven un Object</u>, por lo cual podemos utilizar cualquier cosa, menos un tipo primitivo.
+<u>No hay forma de verificar como se utiliza la clase en tiempo de compilación</u>. 
+- Una parte del código <u>podría utilizar el método set
+pasándole un Integer</u> y <u>suponer que el método get devuelva un objeto de tipo Integer</u>. 
+- **Sin embargo**, <u>otra parte del código
+podría suponer que el método get devuelva un String</u>, resultando en un error en tiempo de ejecución.
+
+Una **clase genérica** se define utilizando el **siguiente formato**:
+```java
+class name<T1, T2, ..., Tn> { /* ... */ }
+```
+
+La **sección de tipos de parámetros**, delimitada por **<>**, sigue el nombre de la clase. Especifica el tipo de parámetros, **llamados
+también variables de tipo, T1, T2, ..., y Tn**.
+
+```java
+/**
+* Versión genérica de la clase Contenedor.
+* @param <T> el tipo de valor que será almacenado
+*/
+public class Contenedor<T> {
+    // T significa "Tipo"
+    private T t;
+    public void set(T t) { 
+        this.t = t; 
+    }
+    public T get() { 
+        return t; 
+    }
+}
+```
+Como podemos observar, <u>todas las ocurrencias de **Object** se han remplazado con **T**</u>. 
+- **Una variable de tipo puede ser cualquier tipo no primitivo** que especificamos: cualquier clase, interfaz, o incluso otra variable de tipo. 
+- Se puede utilizar la <u>misma estructura para definir interfaces genéricas</u>.
+
+Por convención, los nombres de variables de tipo son letras mayúsculas. Los tipos de parámetros más utilizados son:
+
+- E - Elemento (utilizado extensivamente en JCF)
+- K - Clave
+- N - Número
+- T - Tipo
+- V - Valor
+- S,U,V etc. - segundo, tercer, cuarto tipo
+
+<u>Para utilizar la clase genérica Contenedor</u> en nuestro código, tenemos que hacer una invocación de tipo genérico, que reemplaza T con un valor concreto, por ejemplo Integer:
+```java
+Contenedor<Integer> contenedorEnteros;
+```
+
+Podemos pensar que una <u>invocación de tipo genérico es parecida a una invocación de un método ordinario</u>, sólo que en vez de
+pasar un argumento al método, pasamos un argumento de tipo — Integer en este caso — a la misma clase Contenedor.
+
+<u>Como cualquiera declaración de variable</u>, **el código anterior no crea un nuevo objeto Contenedor**, <u>simplemente declara que
+contenedorEnteros contendrá una referencia a un</u> *"Contenedor de Integer"*, que es como se lee
+**Contenedor\<Integer>.**
+
+Para **instanciar esta clase**, utilizamos, como siempre, la palabra clave new, pero ahora ponemos \<Integer> entre el nombre de clase y las paréntesis:
+```java
+Contenedor<Integer> contenedorEnteros = new Contenedor<Integer>();
+```
+o, desde Java SE 7, simplemente:
+```java
+Contenedor<Integer> contenedorEnteros = new Contenedor<>();
+```
