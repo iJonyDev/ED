@@ -1324,3 +1324,256 @@ Encontrado en la posición: 2
 Max natural: 14
 Min natural: 2
 ```
+
+#### 9.4.2 Generar Tickets de Articulos
+
+```java
+// Fichero IArticulo.java
+public interface IArticulo {
+    public String getCb();
+    public String getNombre();
+    public String getFamilia();
+    public float getPrecio();
+    public void setPrecio(float p);
+    public String toString();
+    public boolean equals(Object o);
+}
+// Fichero Articulo.java
+public class Articulo implements IArticulo{
+    private String cb;
+    private String nombre;
+    private String familia;
+    private float precio;
+    public Articulo(String c, String n, String f, float p) {
+        cb = c;
+        nombre = n;
+        familia = f;
+        precio = p;
+    }
+    public String getCb(){
+        return cb; 
+    }
+    public String getNombre(){
+        return nombre; 
+    }
+    public String getFamilia(){
+        return familia;
+    }
+    public float getPrecio(){
+        return precio; 
+    }
+    public void setPrecio(float p){ 
+        precio=p; 
+    }
+    public String toString(){
+        return cb + " \t " + nombre + " \t " + familia + " \t " + precio + " Euros";
+    }
+    public boolean equals(Object o){
+        return cb.equals(((IArticulo)o).getCb());
+    }
+}
+// Fichero ITicket.java
+public interface ITicket {
+    public void añadeArticulo(IArticulo a);
+    public void borraArticulo(IArticulo a);
+    public String toString();
+    public boolean buscar(IArticulo a);
+}
+// Fichero Ticket.java
+import java.util.*;
+public class Ticket implements ITicket{
+    private int id;
+    private List<IArticulo> articulos; //LISTA DE ARTÍCULOS
+    private float total;
+
+    public Ticket(int id) {
+    this.id = id;
+    articulos = new ArrayList<>();
+    total = 0.0F;
+    }
+
+    public void añadeArticulo(IArticulo a){
+    articulos.add(a);
+    total += a.getPrecio();
+    }
+
+    public void borraArticulo(IArticulo a){
+    boolean borrado = articulos.remove(a);
+    if (borrado)
+        total ­= a.getPrecio();
+    }
+
+    public String toString(){
+        String sal = "TICKET No: "+ id + "\n";
+        sal = sal + "CB \t Art. \t Familia \t Precio \n" ;
+        sal = sal + "­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­ \n";
+        Iterator<IArticulo> it = articulos.iterator();
+        while (it.hasNext()){
+            sal = sal + it.next() + "\n";
+        }
+        sal = sal + "­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­ \n TOLAL: " + total;
+        return sal;
+    }
+
+    public boolean buscar(IArticulo a){
+        return articulos.contains(a);
+    }
+}
+// Fichero Prueba.java, PROGRAMA PRINCIPAL
+public class Prueba {
+    public static void main(String [] args){
+    ITicket t = new Ticket(0001);
+    IArticulo a1 = new Articulo("800001", "Queso", "ALIMENTACION", 2.6F);
+    IArticulo a2 = new Articulo("800002", "Pan", "ALIMENTACION", 0.65F);
+    t.añadeArticulo(a1);
+    t.añadeArticulo(a2);
+    t.añadeArticulo(a1);
+    t.añadeArticulo(new Articulo("400002", "Vino", "BEBIDAS", 1.50F));
+    System.out.println(t);
+    System.out.println(t.buscar(a1));
+    t.borraArticulo(a1);
+    System.out.println(t);
+    }
+}
+```
+
+## **10. Conjuntos**
+
+### 10.1 Introduccion
+
+Un **conjunto** es una estructura de datos que almacena una **colección de elementos** en el que **no** se **mantiene un orden determinado** y además **no existen elementos repetidos**. La interfaz
+**Set**, de JCF, permite implementar y hacer uso de este tipo de estructuras. La interfaz **SortedSet**, derivada de Set, **permite hacer uso de los conjuntos ordenados**. En este
+tema veremos las características de cada uno de estas interfaces.
+
+### 10.2 Interfaz Set
+
+Además de los **métodos heredados desde Collection**, esta interfaz <u>declara otros métodos exclusivos para el manejo de conjuntos</u>. La **interfaz** que se establece para **Set es más restringida** que para **Collection** y se caracteriza por:
+- El **orden de inserción en la colección no es determinante de la posición que ocupará** dentro de ella, por lo que, con casi toda seguridad, cuando se recuperen los objetos insertados se devolverán en un orden distinto al de inserción.
+- **No puede haber objetos repetidos**. Pero, ¿qué se entiende por objetos repetidos en este contexto?:
+    * Que sean el mismo (identidad), es decir, tienen la misma referencia.
+    * Que sean iguales (igualdad), es decir, que aunque sean objetos distintos, los consideremos iguales porque tengan el mismo contenido en todos o algunos de sus atributos. Por ejemplo: dos objetos de la clase “Persona” se dirán que son iguales si tienen el mismo DNI.
+
+Para que **dos objetos diferentes se consideren iguales**, será necesario **sobrecargar**, en la clase de los objetos que componen el
+conjunto, los métodos **equals y hashCode**. 
+
+Por ejemplo, la clase Persona:
+
+```java
+public boolean equals(Object obj){
+    boolean res = false;
+    Persona aux = (Persona)obj;
+    if (dni==aux.dni)
+        res = true;
+    return res;
+}
+public int hashCode(){
+    return(dni);
+}
+```
+
+**Si no se sobrecarga el método hashCode**, <u>dos objetos son diferentes si sus referencias son distintas, aunque los valores de sus atributos sean iguales </u> (según equals), ya que éste se basa en las referencias por defecto.
+
+#### 10.2.1 Métodos
+- **boolean add(E obj)**: Añade un nuevo objeto al conjunto y devuelve true si el objeto no existía ya, SI el elemento ya existía, no lo añade y devuelve false.
+- **boolean addAll (Collection \<? extends E> col)**: Añade al conjunto que invoca al método, todos los objetos de la colección
+col que no estuviesen ya insertados. Devuelve true si se ha insertado al menos un objeto, false en caso contrario.
+- **void clear()**: Elimina todos los objetos del conjunto (no borra el objeto Set, sólo su contenido).
+- **boolean contains(Object obj)**: Devuelve true si el objeto especificado está en el conjunto, false en caso contrario.
+- **boolean containsAll(Collection col)**: Devuelve true si todos los objetos especificados por la colección “col” están en el conjunto que invoca al método, false en caso contrario.
+- **boolean equals(Collection<?> col)**: Devuelve true si la colección col es un conjunto y es igual al que invoca al método.
+- **boolean isEmpty()**: Devuelve true si el conjunto está vacío.
+- **boolean remove(Object obj)**: Borra el objeto del conjunto que invoca al método. Devuelve true si el elemento se encontraba en el conjunto, false en caso contrario.
+- **boolean removeAll(Collection<?> col)**: Borra del conjunto que invoca al método todos los objetos de la colección col. Devuelve true si al menos se borra un elemento, false en caso contrario.
+- **boolean retainAll(Collection<?> col)**: Borra del conjunto que invoca al método los objetos que no están en la colección col. Devuelve true si al menos se borra un elemento, false en caso contrario.
+- **int size()**: Devuelve el número de objetos que contiene el conjunto.
+- **Object[] toArray()**: Devuelve un array que contiene referencias a todos los objetos del conjunto
+- **Iterator<E> iterator()**. Devuelve un iterador inicializado al principio del conjunto.
+- **int hashCode()**. Durante la ejecución de un programa este método devuelve el “código Hash” del conjunto.
+
+#### 10.2.2 Implementación de <u>Set</u> mediante la clase <u>HashSet</u>
+
+La clase **HashSet**, perteneciente al paquete java.util, permite implementar la interfaz Set. Se caracteriza porque la inserción,
+modificación o búsqueda de un objeto permanece constante y no depende del número de elementos que lo componen.
+
+Constructores: (A partir de la JDK 1.2.2)
+- **public HashSet(int tamaño, float factorCarga)**: Crea un conjunto del **tamaño que se indica**. Cuando la proporción entre
+los objetos almacenados y el tamaño es mayor o igual al **factor de carga**, <u>se incrementa el tamaño de forma automática</u>.
+- **public HashSet(int tamaño)**: Crea un conjunto del **tamaño indicado y factor de carga por defecto de 0.75**.
+- **public HashSet()**: Crea un conjunto con un **tamaño de 101 y un factor de carga de 0.75**.
+- **public HashSet(Collection<? extends E> col)**: Crea un conjunto con las referencias a los objetos de col. El **tamaño es el de col y 0.75 de factor de carga**.
+
+### 10.3 Interfaz SortedSet
+
+La interfaz **SortedSet**, declarada en el paquete java.util, **extiende a la interfaz Set**. <**Además de los
+métodos heredados desde Collection y Set**, <u>esta interfaz declara otros métodos exclusivos para el manejo de conjuntos ordenados</u>.
+Estos conjuntos tienen la particularidad de que los objetos están <u>siempre almacenados con un orden ASCENDENTE</u> que se
+preestablece <u>en el momento</u> de la <u>creación</u> del conjunto. 
+
+La interfaz que se establece para SortedSet se caracteriza por:
+
+- <u>El orden de inserción en la colección no es determinante de la posición</u> que ocupa un objeto dentro de ella. La posición
+<u>depende de si el objeto que se inserta está antes o después, según el orden preestablecido, de los objetos que ya hay
+dentro del conjunto</u>.
+- <u>No puede haber objetos repetidos</u>. Las condiciones para que dos objetos diferentes (no idénticos) se consideren iguales y
+se puedan comparar (por tanto, la clase debe implementar Comparable) son:
+    * **Será necesario redefinir**, en la clase de los objetos que componen el conjunto, los métodos que establecen el
+orden: **equals y compareTo**. Estos métodos deben ser coherentes. 
+
+        Por ejemplo, para la case Persona:
+        ```java
+        public boolean equals(Object obj){
+            Persona aux = (Persona)obj;
+            boolean res = false;
+            if (apellidos.equals(aux.apellidos)
+                res = true;
+            else if (nombre.equals(aux.nombre))
+
+                res = true;
+
+            return res;
+        }
+        public int compareTo(Object obj){
+            Persona aux = (Persona)obj;
+            int cmp = apellidos.compareTo(aux.apellidos);
+            if (cmp == 0)
+                cmp = nombre.compareTo(aux.nombre);
+            return cmp;
+        }
+        ```
+
+    * Podría ser necesario además de manejar un conjunto ordenado de objetos ordenados por un criterio (que se establece con compareTo), trabajar con objetos de la misma clase ordenados por otros criterios, por ejemplo, por el dni. En este caso, es necesario crear una nueva clase que implemente un comparador (Comparator) y sobrecargar el método compare. Un objeto de esta nueva clase se pasará como argumento al constructor del nuevo conjunto, para que esté ordenado por el nuevo criterio. 
+    
+        Ejemplo:
+        ```java
+        class ComparaPorDni implements Comparator {
+            public int compare(Object obj1, Object obj2){
+                Persona p1 = (Persona)obj1;
+                Persona p2 = (Persona)obj2;
+                return (p1.getDni() - p2.getDni());
+            }
+        }
+        ```
+
+#### 10.3.1 Métodos
+
+La interfaz **SortedSet** viene dada por **todos los métodos que tiene Set y añade otros** <u>que tienen sentido en un conjunto que además está ordenado</u>:
+
+- **E first()**: Devuelve el primer objeto (el menor) del conjunto ordenado.
+- **E last()**: Devuelve el último objeto (el mayor) del conjunto ordenado.
+- **SortedSet<E> subSet(E min, E max)**: Devuelve un subconjunto ordenado del que invoca al método, cuyos objetos cumplen: min <= objetos <max. (min y max no tienen porque pertenecer a la colección).
+- **SortedSet<E> headSet(E max)**: Devuelve todos los objetos cuyos objetos cumplen: objetos < max.
+- **SortedSet<E> tailSet(E min)**: Devuelve todos los objetos cuyos objetos cumplen: objetos >= min.
+- **Comparator<? super E> comparator()**: <u>Devuelve el comparador que establece el orden del conjunto</u>. **Si no** se ha usado <u>ninguna clase que implemente el método compare</u>, **devuelve null** (en este caso se está ordenando con compareTo).
+
+#### 10.3.2 Implementación de <u>SortedSet</u> mediante la clase <u>TreeSet</u>
+
+La clase **TreeSet**, perteneciente al paquete java.util, **permite implementar la interfaz SortedSet**. <u>Independintemente de cómo se inserten los objetos, éstos permanecen siempre ordenados ascendentemente por el criterio que se establezca en el constructor</u>.
+
+Constructores: (A partir de la JDK 1.2.2)
+
+- **public TreeSet()**: <u>Crea un conjunto ordenado vacío</u> y establece como <u>criterio de ordenación el orden considerado como natural</u> (el que obligatoriamente se implementa en el método compareTo declarado en la interfaz Comparable).
+- **public TreeSet(Collection<? extends E> col)**: <u>Crea un conjunto ordenado por el orden natural</u> (interfaz Comparable) con los objetos de la colección col (siempre que la colección no sea un SortedSet).
+- **public TreeSet(Comparator<? super E> comp)**: <u>Crea un conjunto ordenado vacío</u> cuyo <u>criterio de ordenación</u> será el <u>que especifique el comparador comp</u> (método compare).
+- **public TreeSet(SortedSet<E> ss)**: <u>Crea un conjunto ordenado con idénticas características que ss </u>(elementos y criterio
+de ordenación).
+
