@@ -1127,3 +1127,200 @@ o, desde Java SE 7, simplemente:
 ```java
 Contenedor<Integer> contenedorEnteros = new Contenedor<>();
 ```
+
+## **9. Listas** 
+### Introducción
+Una lista es un estructura de datos que almacena una colección de elementos en los que se mantiene un determinado orden, que es
+inicialmente el orden de en el que se han insertado los elementos, aunque posteriormente este orden puede ser alterado. Cada
+elemento guarda de alguna manera una referencia al elemento siguiente (excepto el último) y en ocasiones otra referencia al
+elemento anterior (excepto el primero). De esta forma, puede recorrerse la estructura de forma secuencial, pasando por todos los
+elementos de la lista. La interfaz **List** , del Java Collection Framework, permite implementar y hacer uso de este tipo de estructuras.
+
+### 9.1 Métodos
+La interfaz List, declarada en el paquete java.util, extiende a la interfaz Collection vista en temas anteriores. Así, además de los
+métodos heredados desde Collection, esta interfaz declara otros métodos exclusivos para el manejo de Listas.
+
+```java
+public interface List<E> extends Collection<E>{
+    public int size();
+    public boolean isEmpty();
+    public boolean contains(Object);
+    public Iterator<E> iterator();
+    public Object[] toArray();
+    public boolean add(E e);
+    public boolean remove(Object);
+    public boolean containsAll(Collection<?> c);
+    public boolean addAll(Collection<? extends E> c);
+    public boolean addAll(int index, Collection<? extends E> c);
+    public boolean removeAll(Collection<?> c);
+    public boolean retainAll(Collection<?> c);
+    public void clear();
+    public boolean equals(Object);
+    public int hashCode();
+    public Object get(int);
+    public Object set(int index, E element);
+    public void add(int index, E element);
+    public Object remove(int);
+    public int indexOf(Object o);
+    public int lastIndexOf(Object o);
+    public ListIterator<E> listIterator();
+    public ListIterator<E> listIterator(int index);
+    public List<E> subList(int fromIndex, int toIndex);
+}
+```
+- **int size()**. Devuelve el número de objetos que contiene la lista.
+- **void add(E obj)**. Inserta el objeto al final de la lista.
+- **void add(int posición, E obj)**. Inserta el objeto en la posición de la lista que se indica. Se debe cumplir que:
+0<=posición<size().
+- **boolean addAll(Collection<? extends E> c)**. Igual a **add()**, pero añade un conjunto de datos si es posible.
+- **void retainAll(Collection<?> c)**. Elimina todos los elementos menos los especificados por la colección pasada como
+parámetro.
+- **void clear()**. Borra todos los objetos de la lista (no borra el objeto lista, sino su contenido).
+- **boolean contains(Object obj)**. Devuelve true si el elemento especificado está en la lista, false en caso contrario.
+- **boolean containsAll(Collection<?> c)**. Igual que contains(), pero con un conjunto de elementos.
+- **Object get(int posición)**. Devuelve el elemento que está en la posición indicada. Se debe cumplir que: 0<=posición<size().
+- **int indexOf(Object obj)**. Devuelve la posición de la primera vez que el objeto aparece en la lista ó –1 si no se encuentra.
+- **int lastIndexOf(Object)**. Devuelve la posición de la última vez que el objeto aparece en la lista ó –1 si no se encuentra.
+- **boolean isEmpty()**. Devuelve true si la lista está vacía y false en caso contrario.
+- **Object remove(int posición)**. Borra y devuelve el elemento que se encuentra en la posición especificada. Se debe cumplir
+que: 0<=posición<size().
+- **boolean remove(Object obj)**. Borra la primera ocurrencia en la lista del objeto especificado. Devuelve true si el elemento
+se encontraba en la lista, false en caso contrario.
+- **void removeAll(Collection<?> c)**. Igual que remove(), pero elimina el conjunto de elementos que se pasa como
+parámetro.
+- **Object set(int posición, E element)**. Reemplaza el objeto de la posición especificada con el que se pasa como
+argumento. Se debe cumplir que: 0<=posición<size().
+- **List<E> subList(int inicio, int fin)**. Devuelve una sublista con los objetos que se encuentran situados entre inicio y fin-1.
+Se debe cumplir que: 0<=inicio y fin<size().
+- **Object[] toArray()**. Devuelve un array de objetos con los elementos de la lista.
+- **Iterator<E> iterator()**. Devuelve un iterador inicializado al principio de la lista.
+- **ListIterator<E> listIterator()**. Devuelve un iterador de lista (ListIterator) inicializado al principio de la lista.
+- **ListIterator<E> listIterator(int i)**. Devuelve un iterador de lista (ListIterator) inicializado al elemento i-ésimo, es decir, la
+siguiente llamada a next() devolverá leerá el elemento en la posición i (indexada desde 0).
+- **boolean equals(Object)**. Implementa la igualdad o equivalencia. Retorna true si el objeto que llama al método es
+equivalente al que se pasa como parámetro. Devuelve false si el argumento es nulo.
+- **int hashCode()**. Durante la ejecución de un programa este método devuelve el “código Hash” de la lista. Siempre y cuando
+sea factible, este código ha de ser único para cada objeto.
+
+### 9.2 Implementación de List
+Sabemos cuál es la **importancia** de la **separación entre interfaz e implementación** de las clases como parte del enfoque del paradigma de programación orientada a objetos. La metodología de la programación nos **recomienda que pensemos cuidadosamente** <u>las propiedades de las estructuras de datos a usar, para que los algoritmos que las utilicen no necesiten tener en
+cuenta la implementación de dichas estructuras</u>. Esto hace que las interfaces implicadas sean mas reutilizables y más fácil de implementar. Pero cuando se va a usar la implementación de ciertas estructuras de datos **siempre será bueno pensar en su “rendimiento”**. Es decir, tener en cuenta el tiempo y el espacio (eficiencia) que van a consumir los algoritmos que utilicen datos.
+<u>Por ello vamos a definir ciertos conceptos que van íntimamente ligados al concepto de Lista y relacionados con las dos clases
+que implementan la interfaz List</u>: **ArrayList y LinkedList***.
+
+#### 9.2.1 Clase ArrayList
+Los constructores de esta clase crean un array (con un tamaño por defecto en Jdk1.2.2 de 10 elementos o con el número que se
+pase por parámetro al constructor). Cada elemento apunta a los objetos que van formando la lista.
+
+- **Ventajas**: Permite un acceso aleatorio rápido.
+- **Inconvenientes**: Inserción y borrado “pesados”:
+    * Si se inserta un objeto en medio o se borra uno existente, hay que recopiar todas las referencias a partir de esa posición.
+    * Si se añade un nuevo objeto a un ArrayList que está lleno, automáticamente se crea un nuevo más grande y se copia la información de antiguo al nuevo.
+
+**Constructores:**
+- **ArrayList()**. Construye una lista vacía.
+- **ArrayList( Collection<? extends E> c)**. Construye una lista que contiene los elementos de la colección, en el
+orden en que son devueltos por el iterador de la colección.
+- **ArrayList(int capacidadInicial)**. Construye una lista vacía con la capacidad inicial dada.
+
+#### 9.2.2 Clase LinkedList
+
+Permite mantener una lista de objetos mediante referencias que apuntan al siguiente y al anterior (lista doblemente enlazada).
+
+- **Ventajas**: La inserción y borrado de un objeto son operaciones de bajo coste de actualización sobre la lista ya existente.
+- **Inconvenientes**: (Acceso secuencial) la búsqueda de un objeto se realiza recorriendo la lista. Cuando se accede a la
+posición “i”, se comienza por el primer elemento (posición cero) y se va recorriendo, apoyándose en un contador hasta que
+éste vale “i-1”. La búsqueda se hace “pesada”.
+
+**Constructores**:
+
+- **LinkedList()**. Construye una lista vacía.
+- **LinkedList( Collection<? extends E> c)**. Construye una lista que contiene los elementos de la colección, en el
+orden en que son devueltos por el iterator de la colección.
+
+### 9.3 Esquemas de Recorrido
+
+Recorrido hacia delante (sin genéricos): (También con ListIterator)
+```java
+List l = new ArrayList();
+. . .
+iterator = l.iterator();
+// ListIterator it = l.listIterator(n); /*Desde la pos n*/
+while (it.hasNext())
+{
+    Tipo obj = (<Casting>)it.next();
+    TRATAR obj
+}
+```
+Con genéricos:
+```java
+List<TIPO> l = new ArrayList<>();
+. . .
+iterator<TIPO> = l.iterator();
+// ListIterator it = l.listIterator(n); /*Desde la pos n*/
+while (it.hasNext())
+{
+    Tipo obj = it.next(); //no hace falta el casting
+    TRATAR obj
+}
+```
+Recorrido hacia atrás:
+```java
+List l = new ArrayList();
+. . .
+ListIterator it = l.listIterator(l.size());
+// ListIterator it = l.listIterator(n); /*Desde la pos n*/
+while (it.hasPrevious())
+{
+    Tipo obj = (<Casting>)it.previous();
+    TRATAR obj
+}
+```
+Con genéricos:
+```java
+List<TIPO> l = new ArrayList<>();
+. . .
+ListIterator<TIPO> it = l.listIterator(l.size());
+// ListIterator it = l.listIterator(n); /*Desde la pos n*/
+while (it.hasPrevious())
+{
+    Tipo obj = it.previous();
+    TRATAR obj
+}
+```
+
+### 9.4 Ejemplos
+
+#### 9.4.1. Uso de listas y clase Collections.
+```java
+
+import java.util.*;
+public class Ejemplo1 {
+    public static void main(String[] args) {
+    List<Integer> lista = new ArrayList<>();
+    int i;
+    lista.add(3);
+    lista.add(2);
+    lista.add(14);
+    lista.add(9);
+    System.out.println("Original: " + lista);
+    Collections.reverse(lista);
+    System.out.println("Reverse: " + lista);
+    Collections.sort(lista);
+    System.out.println("Sort: " + lista);
+    System.out.println("Encontrado en la posición:"
+    + Collections.binarySearch(lista, 9));
+    System.out.println("Max natural:" + Collections.max(lista));
+    System.out.println("Min natural:" + Collections.min(lista));
+    }
+}
+```
+Salida del Programa:
+```
+Original: [3, 2, 14, 9]
+Reverse: [9, 14, 2, 3]
+Sort: [2, 3, 9, 14]
+Encontrado en la posición: 2
+Max natural: 14
+Min natural: 2
+```
