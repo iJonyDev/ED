@@ -1577,3 +1577,96 @@ Constructores: (A partir de la JDK 1.2.2)
 - **public TreeSet(SortedSet<E> ss)**: <u>Crea un conjunto ordenado con idénticas características que ss </u>(elementos y criterio
 de ordenación).
 
+### 10.4 Ejercicios
+#### 10.4.1. Ejercicio 1. Conjunto matemático mediante Set
+
+Se pretende crear una estructura de datos para el manejo de conjuntos matemáticos de objetos genéricos que permita, además de
+almacenar un conjunto de datos, aplicar a éste las operaciones básicas de álgebra de conjuntos (unión, intersección, etc). Así, dada
+la interfaz **IConjunto**, escriba la clase **Conjunto** que implementa dicha interfaz para cumplir el objetivo del ejercicio. Escriba un
+programa principal que muestre el funcionamiento de la nueva estructura de datos.
+
+```java
+//IConjunto.java
+import java.util.*;
+public interface IConjunto {
+    public Set getS();
+    public String toString();
+    public void anhadir(Object o);
+    public void borrar(Object o);
+    public IConjunto union(IConjunto c);
+    public IConjunto interseccion(IConjunto c);
+    public IConjunto diferencia(IConjunto c);
+    public IConjunto diferenciaSimetrica(IConjunto c);
+    public boolean incluidoEn(IConjunto c);
+    public boolean incluyeA(IConjunto c);
+    public boolean incluyeA(Object o);
+    public boolean equals(Object o);
+}
+```
+O, con genéricos:
+
+```java
+public interface IConjunto<E> {
+    public Set getS();
+    public String toString();
+    public void anhadir(E o);
+    public void borrar(E o);
+    public IConjunto<E> union(IConjunto<E> c);
+    public IConjunto<E> interseccion(IConjunto<E> c);
+    public IConjunto<E> diferencia(IConjunto<E> c);
+    public IConjunto<E> diferenciaSimetrica(IConjunto<E> c);
+    public boolean incluidoEn(IConjunto<E> c);
+    public boolean incluyeA(IConjunto<E> c);
+    public boolean incluyeA(E o);
+    @Override
+    public boolean equals(Object o);
+}
+```
+#### 10.4.2. Ejercicio 2. Diccionario mediante SortedSet
+
+Queremos crear un diccionario de palabras, para lo cual necesitaremos implementar varias interfaces y sus clases asociadas.
+
+1. Completar la clase Palabra e implementar su interfaz asociada, IPalabra. Esta clase tiene tres atributos privados de tipo
+String llamados pal, tipo y def; los cuales almacenarán la palabra propiamente dicha, el tipo (por ejemplo adjetivo,
+sustantivo, adverbio,...) y la definición de la misma, respectivamente. Se debe implementar los consultores y modificadores
+para cada uno de los citados atributos, además del método toString. Además, modifique la clase para que los objetos de la
+misma puedan ser almacenados en un conjunto ordenado, teniendo en cuenta que dos palabras son iguales cuando
+coincide su atributo pal y que el orden natural es el alfabético de este mismo atributo.
+
+    ```java
+    //Palabra.java
+    public class Palabra implements IPalabra {
+        private String pal, tipo, def;
+        public Palabra(String p, String t, String d) {
+        pal = p;
+        tipo = t;
+        def =d;
+        }
+        //<AÑADIR CÓDIGO AQUÍ>
+    }
+    ```
+
+2. Cree un comparador que compare palabras según el orden alfabético del atributo tipo. En caso de igualdad de tipos, se el
+orden será alfabético según el atributo pal.
+
+3. Cree la clase Diccionario, que implemente la interfaz IDiccionario ya dada. Dicha clase sólo tiene un atributo (dic), de tipo
+SortedSet, y dos constructores, el primer constructor crea el diccionario vacío mientras que el segundo acepta como
+parámetro un comparador por tipo, y lo utiliza para ordenar el diccionario. El diccionario deberá permitir añadir y eliminar
+palabras (objetos de la de tipo IPalabra), así como devolver un conjunto ordenado con las palabras que tiene un
+determinado comienzo (método palabrasQueEmpiezanPor). La clase también implementará el método toString.
+
+    ```java
+    //IDiccionario.java
+    import java.util.*;
+    public interface IDiccionario {
+        public void añadirPalabra(IPalabra p);
+        public void eliminarPalabra(IPalabra p);
+        public String toString();
+        public SortedSet palabrasQueEmpiezanPor(String p);
+        public SortedSet getDiccionario();
+        public void anyadirTodo(IDiccionario diccionarioNuevo);
+    }
+    ```
+
+4. Implemente un programa que pruebe todas las clases e interfaces anteriores, creando y usando un diccionario ordenado
+de manera “natural” y otro ordenado por el tipo de palabra (comparador del apartado 2).
