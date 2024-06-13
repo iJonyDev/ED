@@ -8,14 +8,23 @@ Considere el siguientes árbol binario de búsqueda donde las claves son enteros
 a) Representar el árbol binario de búsqueda resultante de ejecutar las siguientes instrucciones.
 
 1. Insertar un nodo con clave 56
+
 ![alt text](<Screenshot 2024-06-12 at 12.05.00.png>)
+
 2. Insertar un nodo con clave 8
+
 ![alt text](<Screenshot 2024-06-12 at 12.06.31.png>)
+
 3. Insertar un nodo con clave 32
+
 ![alt text](<Screenshot 2024-06-12 at 12.07.56.png>)
+
 4. Borrar el nodo con clave 45
+
 ![alt text](<Screenshot 2024-06-12 at 12.11.33.png>)
+
 5. Borra nodo con clave 12
+
 ![alt text](<Screenshot 2024-06-12 at 12.14.41.png>)
 
 b) Implemente en lenguaje java o pseudocódigo el algoritmo de búsqueda de una clave en un árbol binario de búsqueda.
@@ -37,10 +46,24 @@ Considere ahora el árbol proporcionado en el problema 1 como un árbol AVL
 a) Representar el árbol AVL tras ejecutar las siguientes instrucciones:
 
 1. Insertar un nodo con clave 56
+
+![alt text](image.png)
+
 2. Insertar un nodo con clave 20
+
+![alt text](image-1.png)
+
 3. Borrar el nodo con clave 56
-4. Insertar el nodo con clave 78
-5. Insertar el nodo con clave 45
+
+![alt text](image-2.png)
+
+4. Borrar el nodo con clave 78
+
+![alt text](image-3.png)
+
+5. Borrar el nodo con clave 45
+
+![alt text](image-4.png)
 
 b) ¿Cual es la principal ventaja de un árbol AVL con respecto a un árbol binario de búsqueda?
 
@@ -89,6 +112,8 @@ b) ¿Como cambian las estructuras del apartado anterior si se ejecutan las sigui
 2. Insertar arco (5,6)
 3. Insertar arco (4,6)
 4. Borra vértice 6
+
+    - Si se ejecutan las operaciones las estructuras anteriores quedan igual que antes de ejecutarse dichas operaciones, porque el vertice 6, que se inserta, despues se borra.
 
 ### Pregunta 5
 
