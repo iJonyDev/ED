@@ -14,7 +14,7 @@ public class E3 {
             l.add(i * 10);
         System.out.println("Lista: " + l);
         
-        // Error: El método binarySearch() funciona si la lista NO está ordenada
+        // Error: El método binarySearch() NO funciona si la lista NO está ordenada
         int posicion = Collections.binarySearch(l, 20);
         if (posicion >= 0)
             System.out.println("El 20 está en la posición " + posicion + " de la lista");

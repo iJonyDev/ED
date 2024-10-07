@@ -21,7 +21,7 @@ public class Experimento4 {
         System.out.println("\nDespués de ordenar:");
         ComparadorNumero c = new ComparadorNumero();// Experimento 6 b)
         Collections.sort(l, c);                     // Experimento 6 b)
-        // Collections.sort(l);                     // Esperimento 4
+        // Collections.sort(l);                     // Experimento 4
         it = l.iterator();
         while (it.hasNext()) {
             System.out.print((Numero) it.next());
