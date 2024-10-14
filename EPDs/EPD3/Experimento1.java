@@ -8,8 +8,8 @@ import java.util.*;
 
 public class Experimento1 {
     public static void main(String[] args) {
-        List<Integer> l = new ArrayList<>();// Elementos ordenados
-        Set<Integer> s = new HashSet<>();   // Elementos no ordenados
+        List<Integer> l = new ArrayList<>();// Elementos ordenadossegun su orden de insercion
+        Set<Integer> s = new HashSet<>();   // Elementos no siguen un orden
         Iterator<Integer> it;
         for (int i = 0; i <= 20; i++) {     // c)
             l.add(i);

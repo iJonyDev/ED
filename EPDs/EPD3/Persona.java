@@ -24,7 +24,7 @@ public class Persona implements IPersona {
     }
 
     public boolean equals(Object o) {
-        IPersona p1 = (Persona) o;
+        IPersona p1 = (IPersona) o;
         return this.dni.equals(p1.getDni());
     }
 

@@ -9,15 +9,15 @@ import java.util.SortedSet;
 
 public class E3 {
     public static void main(String[] args){
-String[] palabras = {"en","un","lugar","de","la","mancha"};
-SortedSet<String> ss= new ____________;
-for(int i=0;i<palabras.length;i++)
-ss.add(palabras[i]);
-System.out.println("ss: " + ss);
-System.out.println("Primera palabra: " + _________);
-System.out.println("Última palabra: " + _________);
-System.out.println("Palabras entre la letra g y la r: " + _________);
-System.out.println("Palabras desde la palabra \"lugar\" : " + _________);
-System.out.println("Palabras hasta la palabra \"lugar\" : " + _________);
-}
+        String[] palabras = {"en","un","lugar","de","la","mancha"};
+        SortedSet<String> ss= new ____________;
+        for(int i=0;i<palabras.length;i++)
+        ss.add(palabras[i]);
+        System.out.println("ss: " + ss);
+        System.out.println("Primera palabra: " + _________);
+        System.out.println("Última palabra: " + _________);
+        System.out.println("Palabras entre la letra g y la r: " + _________);
+        System.out.println("Palabras desde la palabra \"lugar\" : " + _________);
+        System.out.println("Palabras hasta la palabra \"lugar\" : " + _________);
+    }
 }
