@@ -1,9 +1,11 @@
 package EPDs.EPD5;
-
+// Clase que implementa una lista enlazada
 public class ListaEnlazada<T> {
     private Node<T> firstNode;
     private Node<T> lastNode;
     private int size;
+
+    
 
     public void add(int index, T newElement) throws IndexOutOfBoundsException {
         if (index < 0 || index > size) {
@@ -41,7 +43,9 @@ public class ListaEnlazada<T> {
             this.size++;
         }
     }
-
+    // Experimento 2
+    // ¿Cómo se logra que el nuevo nodo se inserte al principio de la lista?
+    // Se crea un nuevo nodo y se le asigna el nodo que estaba al principio de la lista como su siguiente nodo.
     public void addFront(T newElement) {
         if (newElement != null) {
             Node<T> newNode = new Node<T>(newElement);
@@ -55,6 +59,8 @@ public class ListaEnlazada<T> {
             this.size++;
         }
     }
+
+
 
     public T getElement(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index > size - 1) {
@@ -128,7 +134,8 @@ public class ListaEnlazada<T> {
             this.size--;
         }
     }
-
+    // Experimento 3
+    // ¿En qué línea del código se borra el primer nodo?
     public void removeFront() {
         if (firstNode != null) {
             if (firstNode == lastNode) {
@@ -137,7 +144,7 @@ public class ListaEnlazada<T> {
             } else {
                 Node<T> oldFirstNode = firstNode;
                 firstNode = firstNode.getNext();
-                oldFirstNode.setNext(null);
+                oldFirstNode.setNext(null); // Se borra el primer nodo en esta línea
             }
             this.size--;
         }
@@ -153,54 +160,6 @@ public class ListaEnlazada<T> {
             currentNode = currentNode.getNext();
         }
         return lista;
-    }
-
-    public static void main(String[] args) {
-        ListaEnlazada<Integer> list = new ListaEnlazada<>();
-        int i = 0;
-        while (list.size < 10) {
-            list.addEnd(i);
-            i++;
-        }
-
-        System.out.println(list.toString());
-        System.out.println("La lista tiene " + list.getSize() + " elementos.");
-        System.out.println("El primer elemento es " + list.getFront());
-        System.out.println("El último elemento es " + list.getBack());
-
-        list.removeFront();
-        list.removeEnd();
-        list.add(3, 5);
-
-        System.out.println(list.toString());
-        System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
-        System.out.println("El primer elemento es " + list.getFront());
-        System.out.println("El último elemento es " + list.getBack());
-
-        list.remove(2);
-        System.out.println(list.toString());
-        System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
-
-        list.add(3, 6);
-        list.add(3, null);
-        list.add(0, null);
-        System.out.println(list.toString());
-        System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
-
-        list.listStatus();
-        System.out.println("El primer elemento es " + list.getFront());
-        System.out.println("El último elemento es " + list.getBack());
-
-        while (!list.isEmpty()) {
-            list.removeFront();
-            System.out.println(list.toString());
-            System.out.println("La lista tiene ahora " + list.getSize() + " elementos.");
-        }
-
-        System.out.println(list.listStatus());
-        System.out.println("El primer elemento es " + list.getFront());
-        System.out.println("El último elemento es " + list.getBack());
-
     }
 
 }

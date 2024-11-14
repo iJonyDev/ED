@@ -1,6 +1,6 @@
 
 package EPDs.EPD5;
-
+// Experimento 1
 public interface ILinkedList<E> {
     void add(E newElement, int index) throws IndexOutOfBoundsException;
 
@@ -24,3 +24,5 @@ public interface ILinkedList<E> {
     String toString();
 
 }
+// ¿Por qué se puede lanzar la excepción IndexOutOfBoundsException?
+// Porque se intenta acceder a un índice que no existe en la lista.
