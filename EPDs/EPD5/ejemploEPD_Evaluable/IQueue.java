@@ -2,17 +2,19 @@ package EPDs.EPD5.ejemploEPD_Evaluable;
 
 public interface IQueue<E> {
 
-    boolean buscar(E o);
-
-    E dequeue() throws EmptyQueueException; // EmptyQueueException se lanza si la cola está vacía
-
-    void enqueue(E o);
-
-    E front() throws EmptyQueueException;
-
+    
     boolean isEmpty();
-
+    
     int size();
+    
+    void enqueue(E o);
+    
+    E dequeue() throws EmptyQueueException; // EmptyQueueException se lanza si la cola está vacía
+    
+    E front() throws EmptyQueueException;
+    
+    boolean buscar(E o);
+    
 
 }
 

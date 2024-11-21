@@ -30,15 +30,13 @@ public class Queue<E> implements IQueue<E> {
 
     @Override
     public E dequeue() throws EmptyQueueException {
-        if (isEmpty()) {
+        if (isEmpty())
             throw new EmptyQueueException("La cola está vacía");
-        }
         E element = firstNode.element;
         firstNode = firstNode.next;
         size--;
-        if (isEmpty()) {
+        if (isEmpty())
             lastNode = null;
-        }
         return element;
     }
 

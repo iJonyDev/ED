@@ -2,9 +2,9 @@ package EPDs.EPD5.ejemploEPD_Evaluable;
 
 // Implementacion usando una cola y una pila
 public class PalimdromeChecker_1 {
-    public static boolean isPalindrome(String s) throws EmptyStackException, EmptyQueueException {
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new Queue<>();
+    public static boolean isPalindrome(String s) throws PilaVaciaExcept, ColaVaciaExcept {
+        Pila1<Character> stack = new Pila1<>();
+        Cola1<Character> queue = new Cola1<>();
         String normalized = s.toLowerCase().replaceAll("[^a-z]", "");
         for (int i = 0; i < s.length(); i++) {
             stack.push(normalized.charAt(i));
@@ -23,7 +23,7 @@ public class PalimdromeChecker_1 {
         String phrase = "otto";
         try {
             System.out.println(isPalindrome(phrase));
-        } catch (EmptyStackException | EmptyQueueException e) {
+        } catch (PilaVaciaExcept | ColaVaciaExcept e) {
             e.printStackTrace();
         }
     }
