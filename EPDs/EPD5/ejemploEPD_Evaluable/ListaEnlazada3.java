@@ -54,7 +54,7 @@ public class ListaEnlazada3<E> implements IListaEnlazada<E>{
     public void add(E element, int index) throws IndexOutOfBoundsException {
         if(index < 0 || index > size)
             throw new IndexOutOfBoundsException("msg");
-        if(size == 0){
+        if(index == 0){
             addFront(element);
         }else{
             Node<E> current = first;
@@ -82,12 +82,12 @@ public class ListaEnlazada3<E> implements IListaEnlazada<E>{
 
     @Override
     public void remove(int index) throws IndexOutOfBoundsException, ListaVaciaException {
-        if(index < 0 || index >= index)
+        if(index < 0 || index >= size)
             throw new IndexOutOfBoundsException("msg");
         if(isEmpty())
             throw new ListaVaciaException("msg");
         if(index == 0){
-            first = null;
+            removeFront();
         }else{
             Node<E> current = first;
             for(int i = 0; i < index -1; i++){

@@ -40,9 +40,9 @@ public class Cola<E> implements ICola<E>{
         size++;
     }
 
-    public E dequeue() throws ColaVaciaExcept {
+    public E dequeue() throws IndexOutOfBoundsException, ListaVaciaException {
         if (isEmpty())
-            throw new ColaVaciaExcept("Cola vacía");
+            throw new ListaVaciaException("Cola vacía");
         E element = first.element;
         first = first.next;
         if (first == null)
@@ -51,9 +51,9 @@ public class Cola<E> implements ICola<E>{
         return element;
     }
 
-    public E first() throws ColaVaciaExcept {
+    public E first() throws ListaVaciaException {
         if (isEmpty())
-            throw new ColaVaciaExcept("Cola vacía");
+            throw new ListaVaciaException("Cola vacía");
         return first.element;
     }
 
