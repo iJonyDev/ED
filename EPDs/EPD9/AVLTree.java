@@ -71,7 +71,7 @@ public class AVLTree {
     private void _rotacion_izquierda(Nodo nodo) {
         Nodo hijoDerecho = nodo.getRight();
         nodo.setRight(hijoDerecho.getLeft());
-        hijoDerecho.left = nodo;
+        hijoDerecho.getLeft = nodo;
         this._actualizar_altura(nodo);
         this._actualizar_altura(hijoDerecho);
 

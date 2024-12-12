@@ -44,7 +44,7 @@ public class Cola1<E> implements ICola<E>{
     }
 
     @Override
-    public E dequeue() throws ColaVaciaExcept {
+    public E dequeue() throws IndexOutOfBoundsException, ListaVaciaException, ColaVaciaExcept{
         if(isEmpty())
             throw new ColaVaciaExcept("Cola Vacia");
         E element = first.element;
@@ -56,7 +56,7 @@ public class Cola1<E> implements ICola<E>{
     }
 
     @Override
-    public E first() throws ColaVaciaExcept {
+    public E first() throws ListaVaciaException, ColaVaciaExcept {
         if(isEmpty())
             throw new ColaVaciaExcept("Cola Vacia");
         return first.element;

@@ -4,6 +4,6 @@ public interface ICola<E> {
     int size();
     boolean isEmpty();
     void enqueue(E element);
-    E dequeue() throws IndexOutOfBoundsException, ListaVaciaException;
-    E first() throws ListaVaciaException;
+    E dequeue() throws IndexOutOfBoundsException, ListaVaciaException, ColaVaciaExcept;
+    E first() throws ListaVaciaException, ColaVaciaExcept;
 }

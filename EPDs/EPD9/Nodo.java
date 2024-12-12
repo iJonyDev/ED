@@ -35,7 +35,7 @@ public class Nodo {
         return left;
     }
 
-    public Nodo setLeft(Nodo left) {
+    public void setLeft(Nodo left) {
         this.left = left;
     }
 
