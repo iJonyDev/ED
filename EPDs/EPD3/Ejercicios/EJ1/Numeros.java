@@ -10,10 +10,6 @@ public class Numeros implements INumeros {
         this.SNum = new HashSet<>();
     }
 
-    public boolean addNumero(Integer num) {
-        return this.SNum.add(num);
-    }
-
     public Set<Integer> getPrimos() {
         Set<Integer> primos = new HashSet<>();
         for (Integer num : SNum) {
@@ -33,7 +29,7 @@ public class Numeros implements INumeros {
     }
 
     @Override
-    public boolean addNumero() {
-        return false;
+    public boolean addNumero(Integer num) {
+        return this.SNum.add(num);
     }
 }

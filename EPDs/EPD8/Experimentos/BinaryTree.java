@@ -2,8 +2,6 @@
 
 import java.util.Iterator;
 
-import Experimentos.BinaryNode;
-
 import java.util.Collection;
 
 public interface BinaryTree {

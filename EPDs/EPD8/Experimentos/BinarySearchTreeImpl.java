@@ -183,12 +183,14 @@ public class BinarySearchTreeImpl implements BinarySearchTree {
 
     @Override
     public int size() {
-        return sizeRecursive(root);
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 
     @Override
     public Iterator nodesInOrder() {
-
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'nodesInOrder'");
     }
 
     @Override
@@ -204,62 +206,64 @@ public class BinarySearchTreeImpl implements BinarySearchTree {
     }
 
     @Override
-    public Experimentos.BinaryNode root() {
+    public BinaryNode root() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'root'");
     }
 
     @Override
-    public Experimentos.BinaryNode parent(Experimentos.BinaryNode node) {
+    public BinaryNode parent(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'parent'");
     }
 
     @Override
-    public Collection children(Experimentos.BinaryNode node) {
+    public Collection children(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'children'");
     }
 
     @Override
-    public boolean isInternal(Experimentos.BinaryNode node) {
+    public boolean isInternal(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isInternal'");
     }
 
     @Override
-    public boolean isExternal(Experimentos.BinaryNode node) {
+    public boolean isExternal(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isExternal'");
     }
 
     @Override
-    public boolean isRoot(Experimentos.BinaryNode node) {
+    public boolean isRoot(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isRoot'");
     }
 
     @Override
-    public Experimentos.BinaryNode left(Experimentos.BinaryNode node) {
+    public BinaryNode left(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'left'");
     }
 
     @Override
-    public Experimentos.BinaryNode right(Experimentos.BinaryNode node) {
+    public BinaryNode right(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'right'");
     }
 
     @Override
-    public boolean hasLeft(Experimentos.BinaryNode node) {
+    public boolean hasLeft(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'hasLeft'");
     }
 
     @Override
-    public boolean hasRight(Experimentos.BinaryNode node) {
+    public boolean hasRight(BinaryNode node) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'hasRight'");
     }
+
+
 }
