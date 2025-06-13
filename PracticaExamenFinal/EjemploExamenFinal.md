@@ -29,15 +29,15 @@ a) Representar el árbol binario de búsqueda resultante de ejecutar las siguien
 
 b) Implemente en lenguaje java o pseudocódigo el algoritmo de búsqueda de una clave en un árbol binario de búsqueda.
 ```java
-TreeSearch(k,v){  //k es una clave, v un nodo
-    if (T.isExternal(v)) // Si la raíz(v) es el único elemento del árbol
-        return v;
-    if( k < v.getElement() )
-        return TreeSearch(k, T.getLeft(v));
-    else if (k == v.getElement())
-        return v;
+Find(K,V){  //K es una clave, V un nodo
+    if (V.isExternal()) // Si la raíz(V) es el único elemento del árbol
+        return V; // Devolver elemento del nodo
+    if( K < V.getElement() )
+        return Find(K, V.getLeft());
+    else if (K > V.getElement())
+        return Find(K, V.getRight());
     else
-        return TreeSearch(k, T.getRight(v));      
+        return V;      
 }
 ```
 ### Pregunta 2
@@ -100,10 +100,12 @@ Considere el siguiente grafo no direccionado
 
 a) Proporcione la **edge list** y la **adjacency matrix** relativas al grafo de la figura. Para la adjacency matrix se puede utilizar la estructura simplificada vista en EPD.
 
-- Edge List:
+- Edge List: **[(1, 4), (2, 4), (2, 5), (3, 5), (4, 5)]**
+
+- Adjacency List:
 ![alt text](<Screenshot 2024-06-12 at 11.06.53.png>)
 
-- Adjacency Matrix:
+- Adjacency Matrix: **La matriz es correcta, con la excepción de que matriz[1][1] debe ser 0.**
 ![alt text](<Screenshot 2024-06-12 at 11.17.42.png>)
 
 b) ¿Como cambian las estructuras del apartado anterior si se ejecutan las siguientes operaciones?
@@ -247,32 +249,23 @@ public class Principal {
     Impresion 2.b: [Pepe, Maria, Juan, Cristina] 
     ```
 
-- Impresión 3: Muestra los nombres de las personas en el TreeSet. TreeSet ordena los elementos según su orden natural definido por compareTo(), que en este caso es la edad. Dado que p3 y p4 tienen el mismo DNI, solo uno de ellos se incluirá en el conjunto, y el orden será por edad.
+- Impresión 3: Muestra los nombres de las personas en el TreeSet. TreeSet ordena los elementos según su orden natural definido por compareTo(), que en este caso es la edad. El TreeSet contendrá a las 5 personas, ya que ninguna tiene la misma edad, y las ordenará por edad.
 
     Salida (dependiendo de cuál objeto con DNI duplicado se agregó primero al TreeSet): 
     ```
-    Impresion 3: [Cristina, Maria, Pepe, Juan]
-    ```
-     ó 
-    ```
-    Impresion 3:[Cristina, Maria, Pepe, Paco]
+    Impresion 3: [Cristina, Maria, Pepe, Juan, Paco]
     ```
     
 
-- Impresión 4.a: Después de cambiar el nombre de la última persona en el TreeSet a "Lola", se imprime el TreeSet nuevamente. El orden no cambia porque el orden está determinado por la edad, no por el nombre.
+- Impresión 4.a: ss.last() obtiene la persona con la mayor edad, que es p4 ("Paco", edad 31). Su nombre se cambia a "Lola". El TreeSet mantiene el orden por edad.
 
     Salida: 
     ```
-    Impresion 4.a: [Cristina, Maria, Pepe, Lola]
+    Impresion 4.a: [Cristina, Maria, Pepe, Juan, Lola]
     ```
 
-- Impresión 4.b: Muestra la lista original después de cambiar el nombre de la última persona en el TreeSet. El cambio de nombre afectará al objeto original en la lista si el objeto modificado es el mismo que el de la lista. Dado que TreeSet y ArrayList comparten referencias a los mismos objetos, el cambio de nombre se reflejará en la lista también.
+- Impresión 4.b: El cambio realizado en el objeto p4 a través del TreeSet se refleja en la ArrayList original, ya que ambas colecciones contienen referencias a los mismos objetos.
 
-    Salida (dependiendo de cuál objeto con DNI duplicado se agregó primero al TreeSet y luego se cambió su nombre a "Lola"): 
     ```
     Impresion 4.b: [Pepe, Maria, Juan, Lola, Cristina]
-    ```
-    ó 
-    ```
-    Impresion 4.b: [Pepe, Maria, Juan, Paco, Cristina] 
     ```
